@@ -90,14 +90,10 @@ controller.hears('meta-help', ['direct_message', 'direct_mention'], function (bo
 })
 
 
-controller.hears(['define.*', 'Define.*'], ['direct_message', 'direct_mention'], function (bot, message) {
-  message.text = message.text.substr(7).trim();
-  defineWord(bot, message, 1);
 
-})
 
 controller.hears('.*', ['direct_message', 'direct_mention'], function (bot, message) {
-  defineWord(bot, message, 1);
+  bot.reply(message, 'I really don\'t  know what to say here, can you tell me my line?');
 })
 
 
@@ -115,94 +111,7 @@ controller.on('create_bot',function(bot,config) {
 
 });
 
-function defineWord(bot, message, replyType){
-  var result = "";
-  word  = message.text
-  //bot.reply(message, "Looking for `"+word+"`");
-  safe_word = encodeURIComponent(word)
-  var options = {
-    host: 'www.dictionaryapi.com',
-    path: '/api/v1/references/thesaurus/xml/'+safe_word+'?key=d08999a5-7466-4eca-8051-1b2dfd324740'
-  };
 
-  callback = function(response) {
-    var str = '';
-
-    //another chunk of data has been recieved, so append it to `str`
-    response.on('data', function (chunk) {
-      str += chunk;
-    });
-
-    //the whole response has been recieved, so we just print it out here
-    response.on('end', function () {
-      var parseString = require('xml2js').parseString;
-      var xml = str;
-      var results = [];
-      parseString(xml, function (err, result) {
-        console.dir(JSON.stringify(result));
-        results = result
-        //
-      });
-      console.log(str);
-      // check if there are results-
-      if(!("entry" in results["entry_list"])){
-        bot.reply(message, "Could not find a Definition or Synonyms for "+word);
-        return;
-      }
-      var attachments = []
-      var resultNum = results["entry_list"]["entry"].length;
-      for(pos = 0; pos < resultNum ; pos++){
-        definition  = results["entry_list"]["entry"][pos]["sens"][0]["mc"][0];
-        synonyms  = results["entry_list"]["entry"][pos]["sens"][0]["syn"][0];
-        synonyms_ = results["entry_list"]["entry"][pos]["sens"][0]["syn"][0]["_"]
-        name = results["entry_list"]["entry"][pos]['$']["id"]
-        if(synonyms_ != undefined){
-          synonyms = synonyms_;
-        }
-        //console.log("synonyms = "+ JSON.stringify(synonyms));
-        //console.log("synonyms_ = "+ JSON.stringify(synonyms_));
-        color = getRandomColor();
-        attachments.push(
-            {
-              'fallback': 'Definition  -  `'+ definition +'`',
-              'title': 'Definition ('+name.replace("{ndash}", "-")+')',
-              'text': definition,
-              'color': color
-            },
-            {
-              'fallback': 'Synonyms -  `'+ synonyms +'`',
-              'title': 'Synonyms ('+name.replace("{ndash}", "-")+')',
-              'text': synonyms,
-              'color': color
-            }
-        )
-
-      }
-
-
-
-      var reply_with_attachments = {
-        //'username': 'My bot' ,
-        'text': resultNum+' results for `'+word+'`',
-        'attachments': attachments,
-       // 'icon_url': 'http://lorempixel.com/48/48'
-      }
-
-      if(replyType == 1){
-        bot.reply(message, reply_with_attachments);
-      }else if(replyType == 2){
-        bot.replyPrivate(message, reply_with_attachments);
-      }
-
-    });
-  }
-
-  http.request(options, callback).end();
-
-
-
-
-}
 
 function getRandomColor() {
   var letters = '0123456789ABCDEF'.split('');
