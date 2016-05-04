@@ -75,12 +75,12 @@ controller.hears(['hello', 'hi'], ['direct_message'], function (bot, message) {
 
 controller.hears('.*', ['mention'], function (bot, message) {
   bot.reply(message, 'Hello.')
-  bot.reply(message, 'Thanks for the mention! Give me a word (DM me or @wordsbot: word) and I will provide you with Definition and Synonyms')
+  bot.reply(message, 'what should I say?')
 
 })
 
 
-controller.hears('help', ['direct_message', 'direct_mention'], function (bot, message) {
+controller.hears('meta-help', ['direct_message', 'direct_mention'], function (bot, message) {
   var help = 'I will respond to the following messages: \n' +
       '`DM` me with a word.\n' +
       '`@wordsbot:` with a word.\n' +
