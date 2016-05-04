@@ -1,6 +1,6 @@
 name: Demo Bot
 description: Simple scriptable bot
-avatar: resources/words.png
+avatar: resources/magic-01.jpg
 slackscopes:
   - bot
   - commands
