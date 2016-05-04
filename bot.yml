@@ -1,5 +1,5 @@
-name: WordsBot
-description: Words - Dictionary & Synonyms - This Slack app is a simple tool that provides you with definition and synonyms to a given word.
+name: Demo Bot
+description: Simple scriptable bot
 avatar: resources/words.png
 slackscopes:
   - bot
@@ -15,6 +15,6 @@ slackscopes:
 #    info: This is an secret option
 #    type: secret
 #    default: not secret though
-screenshots:
- - screenshot: resources/screen1.png
+#screenshots:
+# - screenshot: resources/screen1.png
 #  - screenshot: resources/screenshot2.jpg
