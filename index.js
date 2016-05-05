@@ -28,7 +28,7 @@ controller.on('slash_command', function (bot, message) {
   var bot_say = learn.substr(learn.indexOf("\n")+1);
   man_say = man_say.trim();
   bot_say = bot_say.trim();
-  kv.set(persona+'_'+man_say, persona+'_'+bot_say, function (err) {})
+  kv.set(persona+'_'+man_say, +bot_say, function (err) {})
 
   bot.replyPrivate(message, 'When you say: '+man_say+' \n I will say: '+bot_say)
 
@@ -85,8 +85,13 @@ controller.hears(['hello', 'hi'], ['direct_message'], function (bot, message) {
 })
 
 controller.hears('.*', ['mention'], function (bot, message) {
-  bot.reply(message, 'Hello.')
-  bot.reply(message, 'what should I say?')
+  man_say = message.text;
+  var bot_say = kv.get(persona+'_'+man_say, function (err, val) {})
+  if(bot_say == undefined){
+    bot.reply(message, 'what should I say?')
+  }else{
+    bot.reply(message, bot_say)
+  }
 
 })
 
