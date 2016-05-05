@@ -109,7 +109,13 @@ controller.hears('meta-help', ['direct_message', 'direct_mention'], function (bo
 
 
 controller.hears('.*', ['direct_message', 'direct_mention'], function (bot, message) {
-  bot.reply(message, 'I really don\'t  know what to say here, can you tell me my line?');
+  man_say = message.text;
+  var bot_say = kv.get(persona+'_'+man_say, function (err, val) {})
+  if(bot_say == undefined){
+    bot.reply(message, 'what should I say?')
+  }else{
+    bot.reply(message, bot_say)
+  }
 })
 
 
