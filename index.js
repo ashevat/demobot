@@ -112,7 +112,7 @@ controller.hears('.*', ['direct_message', 'direct_mention'], function (bot, mess
   man_say = message.text;
   var bot_say = kv.get(persona+'_'+man_say, function (err, val) {})
   if(bot_say == undefined){
-    bot.reply(message, 'what should I say?')
+    bot.reply(message, 'what should I say? not sure...')
   }else{
     bot.reply(message, bot_say)
   }
