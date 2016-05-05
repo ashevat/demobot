@@ -6,6 +6,7 @@ var http = require('http')
 
 var controller = Botkit.slackbot()
 var con = require('beepboop-botkit').start(controller)
+var kv = require('beepboop-persist')()
 
 
 //bot.startRTM(function (err, bot, payload) {
@@ -69,7 +70,8 @@ controller.hears(['hello', 'hi'], ['direct_mention'], function (bot, message) {
 })
 
 controller.hears(['hello', 'hi'], ['direct_message'], function (bot, message) {
-  bot.reply(message, 'Hello. ')
+  var ds = kv.get(key, function (err, val) {})
+  bot.reply(message, 'Hello. '+ds)
   bot.reply(message, 'It\'s nice to talk to you directly. Give me a word and I will provide you with Definition and Synonyms')
 })
 
