@@ -24,7 +24,7 @@ controller.setupWebserver(process.env.PORT,function(err,webserver) {
 controller.on('slash_command', function (bot, message) {
   console.log('Here is the actual slash command used: ', message.command);
   var learn = message.text
-  var man_say = learn.substr(0, learn.indexOf("\n"))
+  var man_say = learn.substr(0, learn.indexOf("\n")-1)
   var bot_say = learn.substr(learn.indexOf("\n")+1)
   kv.set(persona+'_'+man_say, persona+'_'+bot_say, function (err) {})
 
