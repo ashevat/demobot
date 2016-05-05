@@ -7,7 +7,7 @@ var http = require('http')
 var controller = Botkit.slackbot()
 var con = require('beepboop-botkit').start(controller)
 var kv = require('beepboop-persist')()
-
+var persona = '';
 
 //bot.startRTM(function (err, bot, payload) {
 //  if (err) {
@@ -23,7 +23,13 @@ controller.setupWebserver(process.env.PORT,function(err,webserver) {
 
 controller.on('slash_command', function (bot, message) {
   console.log('Here is the actual slash command used: ', message.command);
-  bot.replyPrivate(message, ':wave:')
+  var learn = message.text
+  var man_say = learn.substr(0, learn.indexOf("\n"))
+  var bot_say = learn.substr(learn.indexOf("\n")+1)
+  kv.set(persona+'_'+man_say, persona+'_'+bot_say, function (err) {})
+
+  bot.replyPrivate(message, 'When you say: '+man_say)
+  bot.replyPrivate(message, 'I will say: '+bot_say)
   //defineWord(bot, message, 2);
 });
 
