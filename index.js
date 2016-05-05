@@ -23,7 +23,7 @@ controller.setupWebserver(process.env.PORT,function(err,webserver) {
 
 controller.on('slash_command', function (bot, message) {
   console.log('Here is the actual slash command used: ', message.command);
-  bot.reply(message, ':wave:')
+  bot.replyPrivate(message, ':wave:')
   //defineWord(bot, message, 2);
 });
 
