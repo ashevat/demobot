@@ -28,8 +28,8 @@ controller.on('slash_command', function (bot, message) {
   var bot_say = learn.substr(learn.indexOf("\n")+1)
   kv.set(persona+'_'+man_say, persona+'_'+bot_say, function (err) {})
 
-  bot.replyPrivate(message, 'When you say: '+man_say)
-  bot.replyPrivate(message, 'I will say: '+bot_say)
+  bot.replyPrivate(message, 'When you say: '+man_say+' \n I will say: '+bot_say)
+
   //defineWord(bot, message, 2);
 });
 
