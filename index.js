@@ -28,7 +28,9 @@ controller.on('slash_command', function (bot, message) {
   var bot_say = learn.substr(learn.indexOf("\n")+1);
   man_say = man_say.trim();
   bot_say = bot_say.trim();
-  kv.set(persona+'_'+man_say, +bot_say, function (err) {})
+  saving  = persona+'_'+man_say;
+  console.log('Saving key: ', saving);
+  kv.set(saving, +bot_say, function (err) {})
 
   bot.replyPrivate(message, 'When you say: '+man_say+' \n I will say: '+bot_say)
 
@@ -84,6 +86,7 @@ controller.hears(['hello', 'hi'], ['direct_message'], function (bot, message) {
   bot.reply(message, 'It\'s nice to talk to you directly. Give me a word and I will provide you with Definition and Synonyms')
 })
 
+/*
 controller.hears('.*', ['mention'], function (bot, message) {
   man_say = message.text;
   var bot_say = kv.get(persona+'_'+man_say, function (err, val) {})
@@ -93,7 +96,7 @@ controller.hears('.*', ['mention'], function (bot, message) {
     bot.reply(message, bot_say)
   }
 
-})
+})*/
 
 
 controller.hears('meta-help', ['direct_message', 'direct_mention'], function (bot, message) {
@@ -110,7 +113,9 @@ controller.hears('meta-help', ['direct_message', 'direct_mention'], function (bo
 
 controller.hears('.*', ['direct_message', 'direct_mention'], function (bot, message) {
   man_say = message.text;
-  var bot_say = kv.get(persona+'_'+man_say, function (err, val) {})
+  loading  = persona+'_'+man_say;
+  console.log('Loading key: ', loading);
+  var bot_say = kv.get(loading, function (err, val) {})
   if(bot_say == undefined){
     bot.reply(message, 'what should I say? not sure...')
   }else{
