@@ -41,9 +41,9 @@ controller.on('slash_command', function (bot, message) {
   //})
   var learning = {id: man_say, beans: bot_say};
   controller.storage.teams.save(learning);
-  console.log("Saved key result: ["+res+"]");
+  //console.log("Saved key result: ["+res+"]");
   //var list  = kv.list(function (err, keys) {});
-  console.log('keys: ', "["+list+"]");
+  //console.log('keys: ', "["+list+"]");
   bot.replyPrivate(message, 'When you say: '+man_say+' \n I will say: '+bot_say)
 
   //defineWord(bot, message, 2);
@@ -131,6 +131,7 @@ controller.hears('.*', ['direct_message', 'direct_mention'], function (bot, mess
   //console.log('keys: ', "["+list+"]");
   //var bot_say = kv.get(loading, function (err, val) {})
   var bot_say = controller.storage.teams.get(loading);
+  console.log('result: ', "["+bot_say+"]");
   if(bot_say == undefined){
     bot.reply(message, 'what should I say? not sure... got - '+bot_say);
   }else{
