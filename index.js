@@ -29,7 +29,7 @@ controller.on('slash_command', function (bot, message) {
   man_say = man_say.trim();
   bot_say = bot_say.trim();
   saving  = persona+'_'+man_say;
-  console.log('Saving key: ', saving);
+  console.log('Saving key: ', "["+saving+"]");
   kv.set(saving, +bot_say, function (err) {})
 
   bot.replyPrivate(message, 'When you say: '+man_say+' \n I will say: '+bot_say)
@@ -114,10 +114,10 @@ controller.hears('meta-help', ['direct_message', 'direct_mention'], function (bo
 controller.hears('.*', ['direct_message', 'direct_mention'], function (bot, message) {
   man_say = message.text;
   loading  = persona+'_'+man_say;
-  console.log('Loading key: ', loading);
+  console.log('Loading key: ', "["+loading+"]");
   var bot_say = kv.get(loading, function (err, val) {})
   if(bot_say == undefined){
-    bot.reply(message, 'what should I say? not sure...')
+    bot.reply(message, 'what should I say? not sure... got - '+bot_say);
   }else{
     bot.reply(message, bot_say)
   }
