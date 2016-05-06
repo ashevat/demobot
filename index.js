@@ -131,7 +131,8 @@ controller.hears('.*', ['direct_message', 'direct_mention'], function (bot, mess
     if(val == undefined){
       bot.reply(message, 'what should I say? not sure... got - '+val);
     }else{
-      bot.reply(message, val["botsay"])
+
+      bot.reply(message, "str"+val["botsay"])
     }
   });
 
