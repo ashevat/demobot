@@ -38,15 +38,10 @@ controller.on('slash_command', function (bot, message) {
   console.log('Saving key, value: ', "["+saving+"],["+bot_say+"}");
 
   var learning = {id: saving, botsay: bot_say};
-  /*
+
   controller.storage.teams.save(learning);
   bot.replyPrivate(message, 'When you say: '+man_say+' \n I will say: '+bot_say)
-  */
-  //var beans = {id: 'cool', beans: ['pinto', 'garbanzo']};
-  //controller.storage.teams.save(beans);
-  var beans = controller.storage.teams.get('cool', function(err, val) {
-    console.log("got value" , val)
-  });
+
   bot.replyPrivate(message, 'When you say: '+man_say+' \n I  say: '+beans)
 
 
@@ -130,16 +125,17 @@ controller.hears('.*', ['direct_message', 'direct_mention'], function (bot, mess
   man_say = message.text;
   loading  = persona+'_'+man_say;
   console.log('Loading key: ', "["+loading+"]");
-  //list  = kv.list(function (err, keys) {});
-  //console.log('keys: ', "["+list+"]");
-  //var bot_say = kv.get(loading, function (err, val) {})
-  var botsay = controller.storage.teams.get(loading);
-  console.log('result: ', "["+botsay+"]");
-  if(botsay == undefined){
-    bot.reply(message, 'what should I say? not sure... got - '+botsay);
-  }else{
-    bot.reply(message, botsay)
-  }
+
+  controller.storage.teams.get(loading, function(err, val) {
+    console.log("got value" , val)
+    if(val == undefined){
+      bot.reply(message, 'what should I say? not sure... got - '+val);
+    }else{
+      bot.reply(message, val)
+    }
+  });
+
+
 })
 
 
