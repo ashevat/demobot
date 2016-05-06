@@ -128,7 +128,7 @@ controller.hears('.*', ['direct_message', 'direct_mention'], function (bot, mess
   loading  = persona+'_'+man_say;
   console.log('Loading key: ', "["+loading+"]");
   //list  = kv.list(function (err, keys) {});
-  console.log('keys: ', "["+list+"]");
+  //console.log('keys: ', "["+list+"]");
   //var bot_say = kv.get(loading, function (err, val) {})
   var bot_say = controller.storage.teams.get(loading);
   if(bot_say == undefined){
