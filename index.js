@@ -42,8 +42,11 @@ controller.on('slash_command', function (bot, message) {
   controller.storage.teams.save(learning);
   bot.replyPrivate(message, 'When you say: '+man_say+' \n I will say: '+bot_say)
   */
-  var botsay = controller.storage.teams.get('default_aaa');
-  bot.replyPrivate(message, 'When you say: '+man_say+' \n I will say: '+botsay)
+  var beans = {id: 'cool', beans: ['pinto', 'garbanzo']};
+  controller.storage.teams.save(beans);
+  beans = controller.storage.teams.get('cool');
+
+  bot.replyPrivate(message, 'When you say: '+man_say+' \n I will say: '+beans)
 });
 
 
