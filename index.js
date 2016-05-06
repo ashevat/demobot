@@ -29,8 +29,10 @@ controller.on('slash_command', function (bot, message) {
   man_say = man_say.trim();
   bot_say = bot_say.trim();
   saving  = persona+'_'+man_say;
-  console.log('Saving key: ', "["+saving+"]");
-  var res = kv.set(saving, bot_say, function (err) {})
+  console.log('Saving key, value: ', "["+saving+"],["+bot_say+"}");
+  var res = kv.set(saving, bot_say, function (err) {
+    console.log('error:', err);
+  })
   console.log("Saved key result: ["+res+"]");
   var list  = kv.list(function (err, keys) {});
   console.log('keys: ', "["+list+"]");
