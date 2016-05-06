@@ -36,17 +36,14 @@ controller.on('slash_command', function (bot, message) {
   bot_say = bot_say.trim();
   saving  = persona+'_'+man_say;
   console.log('Saving key, value: ', "["+saving+"],["+bot_say+"}");
-  //var res = kv.set(saving, bot_say, function (err) {
-  //  console.log('error:', err);
-  //})
-  var learning = {id: saving, botsay: bot_say};
-  controller.storage.teams.save(learning);
-  //console.log("Saved key result: ["+res+"]");
-  //var list  = kv.list(function (err, keys) {});
-  //console.log('keys: ', "["+list+"]");
-  bot.replyPrivate(message, 'When you say: '+man_say+' \n I will say: '+bot_say)
 
-  //defineWord(bot, message, 2);
+  var learning = {id: saving, botsay: bot_say};
+  /*
+  controller.storage.teams.save(learning);
+  bot.replyPrivate(message, 'When you say: '+man_say+' \n I will say: '+bot_say)
+  */
+  var botsay = controller.storage.teams.get('default_aaa');
+  bot.replyPrivate(message, 'When you say: '+man_say+' \n I will say: '+botsay)
 });
 
 
