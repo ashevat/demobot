@@ -30,8 +30,10 @@ controller.on('slash_command', function (bot, message) {
   bot_say = bot_say.trim();
   saving  = persona+'_'+man_say;
   console.log('Saving key: ', "["+saving+"]");
-  kv.set(saving, +bot_say, function (err) {})
-
+  var res = kv.set(saving, bot_say, function (err) {})
+  console.log("Saved key result: ["+res+"]");
+  var list  = kv.list(function (err, keys) {});
+  console.log('keys: ', "["+list+"]");
   bot.replyPrivate(message, 'When you say: '+man_say+' \n I will say: '+bot_say)
 
   //defineWord(bot, message, 2);
