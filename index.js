@@ -13,7 +13,7 @@ var controller = Botkit.slackbot({
 //var controller = Botkit.slackbot()
 var con = require('beepboop-botkit').start(controller)
 //var kv = require('beepboop-persist')()
-var persona = '';
+var persona = 'default';
 
 //bot.startRTM(function (err, bot, payload) {
 //  if (err) {
@@ -39,7 +39,7 @@ controller.on('slash_command', function (bot, message) {
   //var res = kv.set(saving, bot_say, function (err) {
   //  console.log('error:', err);
   //})
-  var learning = {id: man_say, beans: bot_say};
+  var learning = {id: saving, beans: bot_say};
   controller.storage.teams.save(learning);
   //console.log("Saved key result: ["+res+"]");
   //var list  = kv.list(function (err, keys) {});
