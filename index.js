@@ -6,7 +6,7 @@ var http = require('http')
 
 var controller = Botkit.slackbot()
 var con = require('beepboop-botkit').start(controller)
-var kv = require('beepboop-persist')()
+
 var persona = '';
 
 //bot.startRTM(function (err, bot, payload) {
@@ -22,6 +22,7 @@ controller.setupWebserver(process.env.PORT,function(err,webserver) {
 });
 
 controller.on('slash_command', function (bot, message) {
+  var kv = require('beepboop-persist')()
   console.log('Here is the actual slash command used: ', message.command);
   var learn = message.text
   var man_say = learn.substr(0, learn.indexOf("\n")-1);
