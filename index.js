@@ -44,7 +44,8 @@ controller.on('slash_command', function (bot, message) {
   //console.log("Saved key result: ["+res+"]");
   //var list  = kv.list(function (err, keys) {});
   //console.log('keys: ', "["+list+"]");
-  bot.replyPrivate(message, 'When you say: '+man_say+' \n I will say: '+bot_say)
+  var botsay = controller.storage.teams.get(saving);
+  bot.replyPrivate(message, 'When you say: '+man_say+' \n I will say: '+botsay)
 
   //defineWord(bot, message, 2);
 });
