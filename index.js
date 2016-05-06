@@ -39,7 +39,7 @@ controller.on('slash_command', function (bot, message) {
   //var res = kv.set(saving, bot_say, function (err) {
   //  console.log('error:', err);
   //})
-  var learning = {id: saving, beans: bot_say};
+  var learning = {id: saving, botsay: bot_say};
   controller.storage.teams.save(learning);
   //console.log("Saved key result: ["+res+"]");
   //var list  = kv.list(function (err, keys) {});
@@ -130,12 +130,12 @@ controller.hears('.*', ['direct_message', 'direct_mention'], function (bot, mess
   //list  = kv.list(function (err, keys) {});
   //console.log('keys: ', "["+list+"]");
   //var bot_say = kv.get(loading, function (err, val) {})
-  var bot_say = controller.storage.teams.get(loading);
-  console.log('result: ', "["+bot_say+"]");
-  if(bot_say == undefined){
-    bot.reply(message, 'what should I say? not sure... got - '+bot_say);
+  var botsay = controller.storage.teams.get(loading);
+  console.log('result: ', "["+botsay+"]");
+  if(botsay == undefined){
+    bot.reply(message, 'what should I say? not sure... got - '+botsay);
   }else{
-    bot.reply(message, bot_say)
+    bot.reply(message, botsay)
   }
 })
 
