@@ -115,6 +115,8 @@ controller.hears('.*', ['direct_message', 'direct_mention'], function (bot, mess
   man_say = message.text;
   loading  = persona+'_'+man_say;
   console.log('Loading key: ', "["+loading+"]");
+  list  = kv.list(function (err, keys) {});
+  console.log('keys: ', "["+list+"]");
   var bot_say = kv.get(loading, function (err, val) {})
   if(bot_say == undefined){
     bot.reply(message, 'what should I say? not sure... got - '+bot_say);
