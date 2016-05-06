@@ -3,10 +3,16 @@ var http = require('http')
 
 // Expect a SLACK_TOKEN environment variable
 
+//
+firebaseStorage = require('botkit-storage-firebase')({firebase_uri: 'https://demobot.firebaseIO.com'})
+var controller = Botkit.slackbot({
+  storage: firebaseStorage
+});
 
-var controller = Botkit.slackbot()
+
+//var controller = Botkit.slackbot()
 var con = require('beepboop-botkit').start(controller)
-
+//var kv = require('beepboop-persist')()
 var persona = '';
 
 //bot.startRTM(function (err, bot, payload) {
@@ -22,7 +28,6 @@ controller.setupWebserver(process.env.PORT,function(err,webserver) {
 });
 
 controller.on('slash_command', function (bot, message) {
-  var kv = require('beepboop-persist')()
   console.log('Here is the actual slash command used: ', message.command);
   var learn = message.text
   var man_say = learn.substr(0, learn.indexOf("\n")-1);
@@ -31,11 +36,11 @@ controller.on('slash_command', function (bot, message) {
   bot_say = bot_say.trim();
   saving  = persona+'_'+man_say;
   console.log('Saving key, value: ', "["+saving+"],["+bot_say+"}");
-  var res = kv.set(saving, bot_say, function (err) {
-    console.log('error:', err);
-  })
+  //var res = kv.set(saving, bot_say, function (err) {
+  //  console.log('error:', err);
+  //})
   console.log("Saved key result: ["+res+"]");
-  var list  = kv.list(function (err, keys) {});
+  //var list  = kv.list(function (err, keys) {});
   console.log('keys: ', "["+list+"]");
   bot.replyPrivate(message, 'When you say: '+man_say+' \n I will say: '+bot_say)
 
