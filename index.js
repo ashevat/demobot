@@ -93,8 +93,8 @@ controller.hears(['hello', 'hi'], ['direct_mention'], function (bot, message) {
 })
 
 controller.hears(['hello', 'hi'], ['direct_message'], function (bot, message) {
-  var ds = kv.get("hello", function (err, val) {})
-  bot.reply(message, 'Hello. '+ds)
+  //var ds = kv.get("hello", function (err, val) {})
+  bot.reply(message, 'Hello. ')
   bot.reply(message, 'It\'s nice to talk to you directly. Give me a word and I will provide you with Definition and Synonyms')
 })
 
@@ -127,7 +127,7 @@ controller.hears('.*', ['direct_message', 'direct_mention'], function (bot, mess
   man_say = message.text;
   loading  = persona+'_'+man_say;
   console.log('Loading key: ', "["+loading+"]");
-  list  = kv.list(function (err, keys) {});
+  //list  = kv.list(function (err, keys) {});
   console.log('keys: ', "["+list+"]");
   //var bot_say = kv.get(loading, function (err, val) {})
   var bot_say = controller.storage.teams.get(loading);
