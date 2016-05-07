@@ -42,7 +42,7 @@ controller.on('slash_command', function (bot, message) {
 
   }else if(message.command == '/new-persona'){
 
-    var new_persona_id = message.command.toLowerCase().trim();
+    var new_persona_id = message.text.toLowerCase().trim();
     controller.storage.teams.get(new_persona_id , function(err, val) {
       if(val != null){
         bot.replyPrivate(message, 'I already have this persona');
@@ -55,7 +55,7 @@ controller.on('slash_command', function (bot, message) {
         var current_persona = {id: 'current_persona', data: new_persona};
         controller.storage.teams.save(current_persona);
 
-        bot.replyPrivate(message, 'Created new persona - '+new_persona);
+        bot.replyPrivate(message, 'Created new persona - '+new_persona.id);
       }
     });
 
