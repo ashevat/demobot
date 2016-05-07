@@ -132,7 +132,7 @@ controller.hears('.*', ['direct_message', 'direct_mention'], function (bot, mess
       bot.reply(message, 'what should I say here? not sure... \n Please use /learn to teach me new tricks!');
     }else{
       resp = val["botsay"].toString();
-      bot.reply(message, compose(resp, null) )
+      bot.reply(message, compose(resp, []) )
     }
   });
 
