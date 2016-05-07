@@ -15,7 +15,6 @@ var con = require('beepboop-botkit').start(controller)
 //var kv = require('beepboop-persist')()
 
 var persona = {id:"default", persona_name:'Demo Bot', persona_icon: 'http://lorempixel.com/48/48'};
-var all_personas = [persona];
 
 
 var morgan = require('morgan')
@@ -48,9 +47,7 @@ controller.on('slash_command', function (bot, message) {
         bot.replyPrivate(message, 'I already have this persona');
       }else{
         new_persona = {id:new_persona_id, persona_name:'Demo Bot', persona_icon: 'http://lorempixel.com/48/48'};
-        all_personas.push(new_persona)
-        var personas = {id: 'personas', data: all_personas};
-        controller.storage.teams.save(personas);
+        controller.storage.teams.save(new_persona);
 
         var current_persona = {id: 'current_persona', data: new_persona};
         controller.storage.teams.save(current_persona);
@@ -62,7 +59,7 @@ controller.on('slash_command', function (bot, message) {
 
   }else if (message.command == '/load-persona'){
     var new_persona_id = message.text.toLowerCase().trim();
-    controller.storage.teams.personas.get(new_persona_id , function(err, val) {
+    controller.storage.teams.get(new_persona_id , function(err, val) {
       if(val != null){
         var current_persona = {id: 'current_persona', data: val.data};
         controller.storage.teams.save(current_persona);
