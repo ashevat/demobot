@@ -62,7 +62,7 @@ controller.on('slash_command', function (bot, message) {
 
   }else if (message.command == '/load-persona'){
     var new_persona_id = message.text.toLowerCase().trim();
-    controller.storage.teams.get(new_persona_id , function(err, val) {
+    controller.storage.teams.personas.get(new_persona_id , function(err, val) {
       if(val != null){
         var current_persona = {id: 'current_persona', data: val.data};
         controller.storage.teams.save(current_persona);
