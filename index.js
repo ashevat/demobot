@@ -13,15 +13,10 @@ var controller = Botkit.slackbot({
 //var controller = Botkit.slackbot()
 var con = require('beepboop-botkit').start(controller)
 //var kv = require('beepboop-persist')()
-var persona = 'default';
-var persona_name = 'Demo Bot';
-var persona_icon = 'http://lorempixel.com/48/48';
 
-//bot.startRTM(function (err, bot, payload) {
-//  if (err) {
-//    throw new Error('Could not connect to Slack')
-//  }
-//})
+var persona = {persona_name:'Demo Bot', persona_icon: 'http://lorempixel.com/48/48'};
+var all_personas = [persona];
+
 
 var morgan = require('morgan')
 
@@ -31,19 +26,56 @@ controller.setupWebserver(process.env.PORT,function(err,webserver) {
 
 controller.on('slash_command', function (bot, message) {
   console.log('Here is the actual slash command used: ', message.command);
-  var learn = message.text
-  var man_say = learn.substr(0, learn.indexOf("\n")-1);
-  var bot_say = learn.substr(learn.indexOf("\n")+1);
-  man_say = man_say.trim();
-  bot_say = bot_say.trim();
-  saving  = persona+'_'+man_say;
-  console.log('Saving key, value: ', "["+saving+"],["+bot_say+"}");
+  if(message.command == '/learn'){
+    var learn = message.text
+    var man_say = learn.substr(0, learn.indexOf("\n")-1);
+    var bot_say = learn.substr(learn.indexOf("\n")+1);
+    man_say = man_say.toLowerCase().trim();
+    bot_say = bot_say.trim();
+    saving  = persona+'_'+man_say;
+    console.log('Saving key, value: ', "["+saving+"],["+bot_say+"}");
 
-  var learning = {id: saving, botsay: bot_say};
+    var learning = {id: saving, botsay: bot_say};
 
-  controller.storage.teams.save(learning);
-  bot.replyPrivate(message, 'When you say: '+man_say+' \n I will say: '+bot_say)
+    controller.storage.teams.save(learning);
+    bot.replyPrivate(message, 'When you say: '+man_say+' \n I will say: '+bot_say)
 
+  }else if(message.command == '/new-persona'){
+
+    var new_persona_id = message.command.toLowerCase().trim();
+    controller.storage.teams.get(new_persona_id , function(err, val) {
+      if(val != null){
+        bot.replyPrivate(message, 'I already have this persona');
+      }else{
+        new_persona = {id:new_persona_id, persona_name:'Demo Bot', persona_icon: 'http://lorempixel.com/48/48'};
+        all_personas.push(new_persona)
+        var personas = {id: 'personas', data: all_personas};
+        controller.storage.teams.save(personas);
+
+        var current_persona = {id: 'current_persona', data: new_persona};
+        controller.storage.teams.save(current_persona);
+
+        bot.replyPrivate(message, 'Created new persona - '+new_persona);
+      }
+    });
+
+
+  }else if (message.command == '/load-persona'){
+    var new_persona_id = message.command.toLowerCase().trim();
+    controller.storage.teams.get(new_persona_id , function(err, val) {
+      if(val != null){
+        var current_persona = {id: 'current_persona', data: val.data};
+        controller.storage.teams.save(current_persona);
+
+        bot.replyPrivate(message, 'Created new persona - '+val.data);
+      }else{
+
+        // persona not found
+        bot.replyPrivate(message, 'I need my meds! could not find - '+new_persona_id);
+      }
+    });
+
+  }
 
 });
 
@@ -122,7 +154,8 @@ controller.hears('meta-help', ['direct_message', 'direct_mention'], function (bo
 
 
 controller.hears('.*', ['direct_message', 'direct_mention'], function (bot, message) {
-  man_say = message.text;
+  loadPersonality();
+  man_say = message.text.toLowerCase().trim();
   loading  = persona+'_'+man_say;
   console.log('Loading key: ', "["+loading+"]");
 
@@ -158,14 +191,23 @@ controller.on('create_bot',function(bot,config) {
 function compose(text, attachments){
 
   var reply_with_attachments = {
-    'username': persona_name ,
+    'username': persona.persona_name ,
     'text': text,
     'attachments': attachments,
-    'icon_url': persona_icon
+    'icon_url': persona.persona_icon
   }
 
   return reply_with_attachments;
 
+}
+
+function loadPersonality() {
+  controller.storage.teams.get('current_persona', function(err, val) {
+    if(val != null){
+      persona = val.data
+
+    }
+  });
 }
 
 
