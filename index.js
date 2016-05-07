@@ -14,6 +14,8 @@ var controller = Botkit.slackbot({
 var con = require('beepboop-botkit').start(controller)
 //var kv = require('beepboop-persist')()
 var persona = 'default';
+var persona_name = 'Demo Bot';
+var persona_icon = 'http://lorempixel.com/48/48';
 
 //bot.startRTM(function (err, bot, payload) {
 //  if (err) {
@@ -41,7 +43,7 @@ controller.on('slash_command', function (bot, message) {
 
   controller.storage.teams.save(learning);
   bot.replyPrivate(message, 'When you say: '+man_say+' \n I will say: '+bot_say)
-  
+
 
 });
 
@@ -127,10 +129,10 @@ controller.hears('.*', ['direct_message', 'direct_mention'], function (bot, mess
   controller.storage.teams.get(loading, function(err, val) {
     console.log("got value" , val)
     if(val == undefined){
-      bot.reply(message, 'what should I say? not sure... got - '+val);
+      bot.reply(message, 'what should I say here? not sure... \n Please use /learn to teach me new tricks!');
     }else{
       resp = val["botsay"].toString();
-      bot.reply(message,resp )
+      bot.reply(message, compose(resp, null) )
     }
   });
 
@@ -151,6 +153,20 @@ controller.on('create_bot',function(bot,config) {
       });
 
 });
+
+
+function compose(text, attachments){
+
+  var reply_with_attachments = {
+    'username': persona_name ,
+    'text': text,
+    'attachments': attachments,
+    'icon_url': persona_icon
+  }
+
+  return reply_with_attachments;
+
+}
 
 
 
