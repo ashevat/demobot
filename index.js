@@ -31,7 +31,7 @@ controller.on('slash_command', function (bot, message) {
     var bot_say = learn.substr(learn.indexOf("\n")+1);
     man_say = man_say.toLowerCase().trim();
     bot_say = bot_say.trim();
-    saving  = persona.id+'.voc.'+man_say;
+    saving  = persona.id+'_voc_'+man_say;
     console.log('Saving key, value: ', "["+saving+"],["+bot_say+"}");
 
     var learning = {id: saving, botsay: bot_say};
@@ -70,6 +70,23 @@ controller.on('slash_command', function (bot, message) {
 
         // persona not found
         bot.replyPrivate(message, 'I need my meds! could not find - '+new_persona_id);
+      }
+    });
+
+  }else if (message.command == '/set-persona-name'){
+    var new_persona_name = message.text.trim();
+    controller.storage.teams.get('current_persona', function(err, val) {
+      if(val != null){
+        persona = val.data
+        val.data.persona_name = new_persona_name;
+        controller.storage.teams.save(val);
+        persona_id = val.data.id;
+        controller.storage.teams.get(persona_id, function(err, val1) {
+          if(val1 != null){
+            val1.persona_name = new_persona_name;
+            controller.storage.teams.save(val1);
+          }
+        });
       }
     });
 
@@ -153,7 +170,7 @@ controller.hears('meta-help', ['direct_message', 'direct_mention'], function (bo
 controller.hears('.*', ['direct_message', 'direct_mention'], function (bot, message) {
   loadPersonality();
   man_say = message.text.toLowerCase().trim();
-  loading  = persona.id+'.voc.'+man_say;
+  loading  = persona.id+'_voc_'+man_say;
   console.log('Loading key: ', "["+loading+"]");
 
   controller.storage.teams.get(loading, function(err, val) {
