@@ -86,7 +86,7 @@ controller.on('slash_command', function (bot, message) {
             val1.persona_name = new_persona_name;
             controller.storage.teams.save(val1);
             bot.replyPrivate(message, 'From now on I shall be called Sir '+new_persona_name);
-          
+
           }
         });
       }
@@ -170,19 +170,21 @@ controller.hears('meta-help', ['direct_message', 'direct_mention'], function (bo
 
 
 controller.hears('.*', ['direct_message', 'direct_mention'], function (bot, message) {
-  loadPersonality();
-  man_say = message.text.toLowerCase().trim();
-  loading  = persona.id+'_voc_'+man_say;
-  console.log('Loading key: ', "["+loading+"]");
+  loadPersonality( function () {
+    man_say = message.text.toLowerCase().trim();
+    loading  = persona.id+'_voc_'+man_say;
+    console.log('Loading key: ', "["+loading+"]");
 
-  controller.storage.teams.get(loading, function(err, val) {
-    console.log("got value" , val)
-    if(val == undefined){
-      bot.reply(message, 'what should I say here? not sure... \n Please use /learn to teach me new tricks!');
-    }else{
-      resp = val["botsay"].toString();
-      bot.reply(message, compose(resp, []) )
-    }
+    controller.storage.teams.get(loading, function(err, val) {
+      console.log("got value" , val)
+      if(val == undefined){
+        bot.reply(message, 'what should I say here? not sure... \n Please use /learn to teach me new tricks!');
+      }else{
+        resp = val["botsay"].toString();
+        bot.reply(message, compose(resp, []) )
+      }
+    });
+
   });
 
 
@@ -217,11 +219,11 @@ function compose(text, attachments){
 
 }
 
-function loadPersonality() {
+function loadPersonality(callback) {
   controller.storage.teams.get('current_persona', function(err, val) {
     if(val != null){
       persona = val.data
-
+      callback();
     }
   });
 }
