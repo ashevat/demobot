@@ -92,6 +92,25 @@ controller.on('slash_command', function (bot, message) {
       }
     });
 
+  }else if (message.command == '/set-persona-icon-url'){
+    var new_persona_icon_url = message.text.trim();
+    controller.storage.teams.get('current_persona', function(err, val) {
+      if(val != null){
+        persona = val.data
+        val.data.persona_icon = new_persona_icon_url;
+        controller.storage.teams.save(val);
+        persona_id = val.data.id;
+        controller.storage.teams.get(persona_id, function(err, val1) {
+          if(val1 != null){
+            val1.persona_icon = new_persona_icon_url;
+            controller.storage.teams.save(val1);
+            bot.replyPrivate(message, 'From now on I shall use a new icon - '+new_persona_icon_url);
+
+          }
+        });
+      }
+    });
+
   }
 
 });
