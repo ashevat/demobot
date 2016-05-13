@@ -258,7 +258,6 @@ function loadPersonality(team_id, callback) {
       save_id = team_id+"/default"
       new_persona = {id:save_id, persona_name:'Demo Bot', persona_icon: 'http://lorempixel.com/48/48'};
       controller.storage.teams.save(new_persona);
-
       var current_persona = {id: team_id+"/"+'current_persona', data: new_persona};
       controller.storage.teams.save(current_persona);
     }
