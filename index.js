@@ -112,8 +112,9 @@ controller.on('slash_command', function (bot, message) {
 
   }else{
     var human_say = message.command +" "+message.text.toLowerCase().trim();
-    console.log('gonig to call loadPersonality' );
-    loadPersonality( function () {
+    console.log('gonig to call' ,  message);
+    bot.replyPublic(message, "")
+    /*loadPersonality( function () {
       loading  = persona.id+'_voc_'+human_say;
       console.log('Loading key: ', "["+loading+"]");
 
@@ -127,7 +128,7 @@ controller.on('slash_command', function (bot, message) {
         }
       });
 
-    });
+    });*/
 
   }
 
