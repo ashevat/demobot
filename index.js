@@ -115,13 +115,14 @@ controller.on('slash_command', function (bot, message) {
     console.log('gonig to call' ,  message);
     bot.replyPublic(message, "");
     ///
-    bot.startPrivateConversation({user: message.user_id},function(err,convo) {
+    bot.api.im.open({ user: message.user_id }, function (err, response) {
       if (err) {
-        console.log(err);
-      } else {
-        convo.say(':wave: I am the Words bot that has just joined your team');
+        return console.log(err)
       }
-    });
+      var dmChannel = response.channel.id
+      bot.say({channel: dmChannel, text: 'Thanks!'})
+    })
+
 
     /*loadPersonality( function () {
       loading  = persona.id+'_voc_'+human_say;
