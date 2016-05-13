@@ -114,32 +114,6 @@ controller.on('slash_command', function (bot, message) {
     var human_say = message.command +" "+message.text.toLowerCase().trim();
     console.log('gonig to call' ,  message);
     bot.replyPublic(message, "");
-    ///
-    bot.api.im.open({ user: message.user_id }, function (err, response) {
-      if (err) {
-        return console.log(err)
-      }
-      var dmChannel = response.channel.id
-      bot.say({channel: dmChannel, text: 'Thanks!'})
-    })
-
-
-    /*loadPersonality( function () {
-      loading  = persona.id+'_voc_'+human_say;
-      console.log('Loading key: ', "["+loading+"]");
-
-      controller.storage.teams.get(loading, function(err, val) {
-        console.log("got value" , val)
-        if(val == undefined){
-          bot.replyPrivate(message, 'what should I say here? not sure... \n Please use /learn to teach me new tricks!');
-        }else{
-          resp = val["botsay"].toString();
-          bot.replyPublic(message, compose(resp, []) )
-        }
-      });
-
-    });*/
-
   }
 
 });
@@ -218,7 +192,7 @@ controller.hears('meta-help', ['direct_message', 'direct_mention'], function (bo
 
 
 controller.hears('.*', ['direct_message', 'direct_mention'], function (bot, message) {
-  /*loadPersonality( function () {
+  loadPersonality( function () {
     man_say = message.text.toLowerCase().trim();
     loading  = persona.id+'_voc_'+man_say;
     console.log('Loading key: ', "["+loading+"]");
@@ -233,7 +207,7 @@ controller.hears('.*', ['direct_message', 'direct_mention'], function (bot, mess
       }
     });
 
-  });*/
+  });
 
 
 })
