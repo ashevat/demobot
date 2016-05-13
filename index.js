@@ -25,96 +25,97 @@ controller.setupWebserver(process.env.PORT,function(err,webserver) {
 
 controller.on('slash_command', function (bot, message) {
   console.log('Here is the actual slash command used: ', message.command);
-  if(message.command == '/learn'){
-    var learn = message.text
-    var man_say = learn.substr(0, learn.indexOf("\n")-1);
-    var bot_say = learn.substr(learn.indexOf("\n")+1);
-    man_say = man_say.toLowerCase().trim();
-    bot_say = bot_say.trim();
-    saving  = persona.id+'_voc_'+man_say;
-    console.log('Saving key, value: ', "["+saving+"],["+bot_say+"}", persona);
+  loadPersonality( function () {
+    if(message.command == '/learn'){
+      var learn = message.text
+      var man_say = learn.substr(0, learn.indexOf("\n")-1);
+      var bot_say = learn.substr(learn.indexOf("\n")+1);
+      man_say = man_say.toLowerCase().trim();
+      bot_say = bot_say.trim();
+      saving  = persona.id+'_voc_'+man_say;
+      console.log('Saving key, value: ', "["+saving+"],["+bot_say+"}");
 
-    var learning = {id: saving, botsay: bot_say};
+      var learning = {id: saving, botsay: bot_say};
 
-    controller.storage.teams.save(learning);
-    bot.replyPrivate(message, 'When you say: '+man_say+' \n I will say: '+bot_say)
+      controller.storage.teams.save(learning);
+      bot.replyPrivate(message, 'When you say: '+man_say+' \n I will say: '+bot_say)
 
-  }else if(message.command == '/new-persona'){
+    }else if(message.command == '/new-persona'){
 
-    var new_persona_id = message.text.toLowerCase().trim();
-    controller.storage.teams.get(new_persona_id , function(err, val) {
-      if(val != null){
-        bot.replyPrivate(message, 'I already have this persona');
-      }else{
-        new_persona = {id:new_persona_id, persona_name:'Demo Bot', persona_icon: 'http://lorempixel.com/48/48'};
-        controller.storage.teams.save(new_persona);
+      var new_persona_id = message.text.toLowerCase().trim();
+      controller.storage.teams.get(new_persona_id , function(err, val) {
+        if(val != null){
+          bot.replyPrivate(message, 'I already have this persona');
+        }else{
+          new_persona = {id:new_persona_id, persona_name:'Demo Bot', persona_icon: 'http://lorempixel.com/48/48'};
+          controller.storage.teams.save(new_persona);
 
-        var current_persona = {id: 'current_persona', data: new_persona};
-        controller.storage.teams.save(current_persona);
+          var current_persona = {id: 'current_persona', data: new_persona};
+          controller.storage.teams.save(current_persona);
 
-        bot.replyPrivate(message, 'Created new persona - '+new_persona.id);
-      }
-    });
+          bot.replyPrivate(message, 'Created new persona - '+new_persona.id);
+        }
+      });
 
-  }else if (message.command == '/load-persona'){
-    var new_persona_id = message.text.toLowerCase().trim();
-    controller.storage.teams.get(new_persona_id , function(err, val) {
-      if(val != null){
-        //console.log('loaded value, new_persona_id -', val, new_persona_id);
-        var current_persona = {id: 'current_persona', data: val};
-        controller.storage.teams.save(current_persona);
+    }else if (message.command == '/load-persona'){
+      var new_persona_id = message.text.toLowerCase().trim();
+      controller.storage.teams.get(new_persona_id , function(err, val) {
+        if(val != null){
+          //console.log('loaded value, new_persona_id -', val, new_persona_id);
+          var current_persona = {id: 'current_persona', data: val};
+          controller.storage.teams.save(current_persona);
 
-        bot.replyPrivate(message, 'Loaded new persona - '+val.id);
-      }else{
+          bot.replyPrivate(message, 'Loaded new persona - '+val.id);
+        }else{
 
-        // persona not found
-        bot.replyPrivate(message, 'I need my meds! could not find - '+new_persona_id);
-      }
-    });
+          // persona not found
+          bot.replyPrivate(message, 'I need my meds! could not find - '+new_persona_id);
+        }
+      });
 
-  }else if (message.command == '/set-persona-name'){
-    var new_persona_name = message.text.trim();
-    controller.storage.teams.get('current_persona', function(err, val) {
-      if(val != null){
-        persona = val.data
-        val.data.persona_name = new_persona_name;
-        controller.storage.teams.save(val);
-        persona_id = val.data.id;
-        controller.storage.teams.get(persona_id, function(err, val1) {
-          if(val1 != null){
-            val1.persona_name = new_persona_name;
-            controller.storage.teams.save(val1);
-            bot.replyPrivate(message, 'From now on I shall be called Sir '+new_persona_name);
+    }else if (message.command == '/set-persona-name'){
+      var new_persona_name = message.text.trim();
+      controller.storage.teams.get('current_persona', function(err, val) {
+        if(val != null){
+          persona = val.data
+          val.data.persona_name = new_persona_name;
+          controller.storage.teams.save(val);
+          persona_id = val.data.id;
+          controller.storage.teams.get(persona_id, function(err, val1) {
+            if(val1 != null){
+              val1.persona_name = new_persona_name;
+              controller.storage.teams.save(val1);
+              bot.replyPrivate(message, 'From now on I shall be called Sir '+new_persona_name);
 
-          }
-        });
-      }
-    });
+            }
+          });
+        }
+      });
 
-  }else if (message.command == '/set-persona-icon-url'){
-    var new_persona_icon_url = message.text.trim();
-    controller.storage.teams.get('current_persona', function(err, val) {
-      if(val != null){
-        persona = val.data
-        val.data.persona_icon = new_persona_icon_url;
-        controller.storage.teams.save(val);
-        persona_id = val.data.id;
-        controller.storage.teams.get(persona_id, function(err, val1) {
-          if(val1 != null){
-            val1.persona_icon = new_persona_icon_url;
-            controller.storage.teams.save(val1);
-            bot.replyPrivate(message, 'From now on I shall use a new icon - '+new_persona_icon_url);
+    }else if (message.command == '/set-persona-icon-url'){
+      var new_persona_icon_url = message.text.trim();
+      controller.storage.teams.get('current_persona', function(err, val) {
+        if(val != null){
+          persona = val.data
+          val.data.persona_icon = new_persona_icon_url;
+          controller.storage.teams.save(val);
+          persona_id = val.data.id;
+          controller.storage.teams.get(persona_id, function(err, val1) {
+            if(val1 != null){
+              val1.persona_icon = new_persona_icon_url;
+              controller.storage.teams.save(val1);
+              bot.replyPrivate(message, 'From now on I shall use a new icon - '+new_persona_icon_url);
 
-          }
-        });
-      }
-    });
+            }
+          });
+        }
+      });
 
-  }else{
-    var human_say = message.command +" "+message.text.toLowerCase().trim();
-    console.log('gonig to call' ,  message);
-    bot.replyPublic(message, "");
-  }
+    }else{
+      bot.replyPublic(message, "");
+    }
+  });
+
 
 });
 
