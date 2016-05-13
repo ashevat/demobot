@@ -34,7 +34,7 @@ controller.on('slash_command', function (bot, message) {
       var bot_say = learn.substr(learn.indexOf("\n")+1);
       man_say = man_say.toLowerCase().trim();
       bot_say = bot_say.trim();
-      saving  = persona.id+'/voc_'+man_say;
+      saving  = persona.id+'_voc/_'+man_say;
       console.log('Saving key, value: ', "["+saving+"],["+bot_say+"}");
 
       var learning = {id: saving, botsay: bot_say};
@@ -56,7 +56,7 @@ controller.on('slash_command', function (bot, message) {
           var current_persona = {id: team_id+"/"+'current_persona', data: new_persona};
           controller.storage.teams.save(current_persona);
 
-          bot.replyPrivate(message, 'Created new persona - '+new_persona.id);
+          bot.replyPrivate(message, 'Created new persona - '+new_persona_id);
         }
       });
 
@@ -201,7 +201,7 @@ controller.hears('.*', ['direct_message', 'direct_mention'], function (bot, mess
   var team_id = message.team;
   loadPersonality(team_id, function () {
     man_say = message.text.toLowerCase().trim();
-    loading  = persona.id+'/voc_'+man_say;
+    loading  = persona.id+'_voc/_'+man_say;
     console.log('Loading key: ', "["+loading+"]");
 
     controller.storage.teams.get(loading, function(err, val) {
