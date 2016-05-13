@@ -261,7 +261,6 @@ function loadPersonality(team_id, callback) {
 
       var current_persona = {id: team_id+"/"+'current_persona', data: new_persona};
       controller.storage.teams.save(current_persona);
-
     }
   });
 }
