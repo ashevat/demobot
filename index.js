@@ -25,14 +25,16 @@ controller.setupWebserver(process.env.PORT,function(err,webserver) {
 
 controller.on('slash_command', function (bot, message) {
   console.log('Here is the actual slash command used: ', message.command);
-  loadPersonality( function () {
+  var team_id  = message.team_id;
+  loadPersonality(team_id, function () {
+
     if(message.command == '/learn'){
       var learn = message.text
       var man_say = learn.substr(0, learn.indexOf("\n")-1);
       var bot_say = learn.substr(learn.indexOf("\n")+1);
       man_say = man_say.toLowerCase().trim();
       bot_say = bot_say.trim();
-      saving  = persona.id+'_voc_'+man_say;
+      saving  = team_id+"/"+persona.id+'/voc_'+man_say;
       console.log('Saving key, value: ', "["+saving+"],["+bot_say+"}");
 
       var learning = {id: saving, botsay: bot_say};
@@ -47,7 +49,8 @@ controller.on('slash_command', function (bot, message) {
         if(val != null){
           bot.replyPrivate(message, 'I already have this persona');
         }else{
-          new_persona = {id:new_persona_id, persona_name:'Demo Bot', persona_icon: 'http://lorempixel.com/48/48'};
+          save_id = team_id+"/"+new_persona_id
+          new_persona = {id:save_id, persona_name:'Demo Bot', persona_icon: 'http://lorempixel.com/48/48'};
           controller.storage.teams.save(new_persona);
 
           var current_persona = {id: 'current_persona', data: new_persona};
@@ -59,10 +62,11 @@ controller.on('slash_command', function (bot, message) {
 
     }else if (message.command == '/load-persona'){
       var new_persona_id = message.text.toLowerCase().trim();
-      controller.storage.teams.get(new_persona_id , function(err, val) {
+      load_id = team_id+"/"+new_persona_id
+      controller.storage.teams.get(load_id , function(err, val) {
         if(val != null){
           //console.log('loaded value, new_persona_id -', val, new_persona_id);
-          var current_persona = {id: 'current_persona', data: val};
+          var current_persona = {id: team_id+"/"+'current_persona', data: val};
           controller.storage.teams.save(current_persona);
 
           bot.replyPrivate(message, 'Loaded new persona - '+val.id);
@@ -75,7 +79,7 @@ controller.on('slash_command', function (bot, message) {
 
     }else if (message.command == '/set-persona-name'){
       var new_persona_name = message.text.trim();
-      controller.storage.teams.get('current_persona', function(err, val) {
+      controller.storage.teams.get(team_id+"/"+'current_persona', function(err, val) {
         if(val != null){
           persona = val.data
           val.data.persona_name = new_persona_name;
@@ -94,7 +98,7 @@ controller.on('slash_command', function (bot, message) {
 
     }else if (message.command == '/set-persona-icon-url'){
       var new_persona_icon_url = message.text.trim();
-      controller.storage.teams.get('current_persona', function(err, val) {
+      controller.storage.teams.get(team_id+"/"+'current_persona', function(err, val) {
         if(val != null){
           persona = val.data
           val.data.persona_icon = new_persona_icon_url;
@@ -193,9 +197,10 @@ controller.hears('meta-help', ['direct_message', 'direct_mention'], function (bo
 
 
 controller.hears('.*', ['direct_message', 'direct_mention'], function (bot, message) {
-  loadPersonality( function () {
+  var team_id = message.team_id;
+  loadPersonality(team_id, function () {
     man_say = message.text.toLowerCase().trim();
-    loading  = persona.id+'_voc_'+man_say;
+    loading  = team_id+"/"+persona.id+'/voc_'+man_say;
     console.log('Loading key: ', "["+loading+"]");
 
     controller.storage.teams.get(loading, function(err, val) {
@@ -242,9 +247,9 @@ function compose(text, attachments){
 
 }
 
-function loadPersonality(callback) {
+function loadPersonality(team_id, callback) {
   console.log('loadPersonality ');
-  controller.storage.teams.get('current_persona', function(err, val) {
+  controller.storage.teams.get(team_id+"/"+'current_persona', function(err, val) {
     if(val != null){
       persona = val.data
       console.log('calling callback', val.data);
