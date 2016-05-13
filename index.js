@@ -242,7 +242,6 @@ function compose(text, attachments){
     'attachments': attachments,
     'icon_url': persona.persona_icon
   }
-
   return reply_with_attachments;
 
 }
