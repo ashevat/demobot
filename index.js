@@ -124,7 +124,7 @@ controller.on('slash_command', function (bot, message) {
           bot.replyPrivate(message, 'what should I say here? not sure... \n Please use /learn to teach me new tricks!');
         }else{
           resp = val["botsay"].toString();
-          bot.replyPrivate(message, compose(resp, []) )
+          bot.replyPublic(message, compose(resp, []) )
         }
       });
 
