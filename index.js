@@ -197,7 +197,7 @@ controller.hears('meta-help', ['direct_message', 'direct_mention'], function (bo
 
 
 controller.hears('.*', ['direct_message', 'direct_mention'], function (bot, message) {
-  console.log('msg: ', message);
+  console.log('msg - ', message);
   var team_id = message.team_id;
   loadPersonality(team_id, function () {
     man_say = message.text.toLowerCase().trim();
