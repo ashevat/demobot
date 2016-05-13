@@ -114,8 +114,15 @@ controller.on('slash_command', function (bot, message) {
     var human_say = message.command +" "+message.text.toLowerCase().trim();
     console.log('gonig to call' ,  message);
     bot.replyPublic(message, "");
-    var channel = message.channel_id
-    bot.say({channel: channel, text: 'Thanks for adding me to your team!'})
+    ///
+    bot.startPrivateConversation({user: message.user_id},function(err,convo) {
+      if (err) {
+        console.log(err);
+      } else {
+        convo.say(':wave: I am the Words bot that has just joined your team');
+      }
+    });
+
     /*loadPersonality( function () {
       loading  = persona.id+'_voc_'+human_say;
       console.log('Loading key: ', "["+loading+"]");
