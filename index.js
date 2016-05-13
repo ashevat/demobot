@@ -53,7 +53,7 @@ controller.on('slash_command', function (bot, message) {
           new_persona = {id:save_id, persona_name:'Demo Bot', persona_icon: 'http://lorempixel.com/48/48'};
           controller.storage.teams.save(new_persona);
 
-          var current_persona = {id: 'current_persona', data: new_persona};
+          var current_persona = {id: team_id+"/"+'current_persona', data: new_persona};
           controller.storage.teams.save(current_persona);
 
           bot.replyPrivate(message, 'Created new persona - '+new_persona.id);
@@ -254,6 +254,14 @@ function loadPersonality(team_id, callback) {
       persona = val.data
       console.log('calling callback', val.data);
       callback();
+    }else{
+      save_id = team_id+"/default"
+      new_persona = {id:save_id, persona_name:'Demo Bot', persona_icon: 'http://lorempixel.com/48/48'};
+      controller.storage.teams.save(new_persona);
+
+      var current_persona = {id: team_id+"/"+'current_persona', data: new_persona};
+      controller.storage.teams.save(current_persona);
+
     }
   });
 }
