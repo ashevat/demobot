@@ -31,8 +31,7 @@ controller.on('slash_command', function (bot, message) {
     var bot_say = learn.substr(learn.indexOf("\n")+1);
     man_say = man_say.toLowerCase().trim();
     bot_say = bot_say.trim();
-    cur_team_id = message.team_id;
-    saving  = cur_team_id+"/"+persona.id+'/voc/m_'+man_say;
+    saving  = persona.id+'_voc_'+man_say;
     console.log('Saving key, value: ', "["+saving+"],["+bot_say+"}");
 
     var learning = {id: saving, botsay: bot_say};
