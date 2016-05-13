@@ -31,7 +31,8 @@ controller.on('slash_command', function (bot, message) {
     var bot_say = learn.substr(learn.indexOf("\n")+1);
     man_say = man_say.toLowerCase().trim();
     bot_say = bot_say.trim();
-    saving  = persona.id+'_voc_'+man_say;
+    cur_team_id = message.team_id;
+    saving  = cur_team_id+"/"+persona.id+'/voc/'+man_say;
     console.log('Saving key, value: ', "["+saving+"],["+bot_say+"}");
 
     var learning = {id: saving, botsay: bot_say};
@@ -194,7 +195,7 @@ controller.hears('meta-help', ['direct_message', 'direct_mention'], function (bo
 controller.hears('.*', ['direct_message', 'direct_mention'], function (bot, message) {
   loadPersonality( function () {
     man_say = message.text.toLowerCase().trim();
-    loading  = persona.id+'_voc_'+man_say;
+    loading  = persona.id+'/voc/'+man_say;
     console.log('Loading key: ', "["+loading+"]");
 
     controller.storage.teams.get(loading, function(err, val) {
