@@ -32,7 +32,7 @@ controller.on('slash_command', function (bot, message) {
     man_say = man_say.toLowerCase().trim();
     bot_say = bot_say.trim();
     saving  = persona.id+'_voc_'+man_say;
-    console.log('Saving key, value: ', "["+saving+"],["+bot_say+"}");
+    console.log('Saving key, value: ', "["+saving+"],["+bot_say+"}", persona);
 
     var learning = {id: saving, botsay: bot_say};
 
