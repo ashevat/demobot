@@ -258,9 +258,11 @@ function compose(text, attachments){
 }
 
 function loadPersonality(callback) {
+  console.log('loadPersonality ');
   controller.storage.teams.get('current_persona', function(err, val) {
     if(val != null){
       persona = val.data
+      console.log('calling callback', val.data);
       callback();
     }
   });
