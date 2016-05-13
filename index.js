@@ -133,10 +133,10 @@ con.on('add_resource', function (message) {
 
     console.log('starting private conversation with ', slackUserId)
     //bot.api.im.open({user: slackUserId}, function (err, response) {
-    // if (err) return console.log(err)
-    // var dmChannel = response.channel.id
-    // bot.say({channel: dmChannel, text: 'I am the most glorious bot to join your team'})
-    // bot.say({channel: dmChannel, text: 'You must now /invite me to a channel so that I may show everyone how dumb you are'})
+     // if (err) return console.log(err)
+     // var dmChannel = response.channel.id
+     // bot.say({channel: dmChannel, text: 'I am the most glorious bot to join your team'})
+     // bot.say({channel: dmChannel, text: 'You must now /invite me to a channel so that I may show everyone how dumb you are'})
     //})
     bot.startPrivateConversation({user: slackUserId},function(err,convo) {
       if (err) {
@@ -168,15 +168,15 @@ controller.hears(['hello', 'hi'], ['direct_message'], function (bot, message) {
 })
 
 /*
- controller.hears('.*', ['mention'], function (bot, message) {
- man_say = message.text;
- if(bot_say == undefined){
- bot.reply(message, 'what should I say?')
- }else{
- bot.reply(message, bot_say)
- }
+controller.hears('.*', ['mention'], function (bot, message) {
+  man_say = message.text;
+  if(bot_say == undefined){
+    bot.reply(message, 'what should I say?')
+  }else{
+    bot.reply(message, bot_say)
+  }
 
- })*/
+})*/
 
 
 controller.hears('meta-help', ['direct_message', 'direct_mention'], function (bot, message) {
@@ -194,7 +194,7 @@ controller.hears('meta-help', ['direct_message', 'direct_mention'], function (bo
 controller.hears('.*', ['direct_message', 'direct_mention'], function (bot, message) {
   loadPersonality( function () {
     man_say = message.text.toLowerCase().trim();
-    loading  = persona.id+'/voc/'+man_say;
+    loading  = persona.id+'_voc_'+man_say;
     console.log('Loading key: ', "["+loading+"]");
 
     controller.storage.teams.get(loading, function(err, val) {
@@ -216,14 +216,14 @@ controller.hears('.*', ['direct_message', 'direct_mention'], function (bot, mess
 controller.on('create_bot',function(bot,config) {
 
 
-  bot.startPrivateConversation({user: config.createdBy},function(err,convo) {
-    if (err) {
-      console.log(err);
-    } else {
-      convo.say('I am a bot that has just joined your team');
-      convo.say('You must now /invite me to a channel so that I can be of use!');
-    }
-  });
+      bot.startPrivateConversation({user: config.createdBy},function(err,convo) {
+        if (err) {
+          console.log(err);
+        } else {
+          convo.say('I am a bot that has just joined your team');
+          convo.say('You must now /invite me to a channel so that I can be of use!');
+        }
+      });
 
 });
 
