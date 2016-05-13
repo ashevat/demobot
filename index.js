@@ -111,6 +111,25 @@ controller.on('slash_command', function (bot, message) {
       }
     });
 
+  }else{
+    var human_say = message.command +" "+message.text.toLowerCase().trim();
+
+    loadPersonality( function () {
+      loading  = persona.id+'_voc_'+human_say;
+      console.log('Loading key: ', "["+loading+"]");
+
+      controller.storage.teams.get(loading, function(err, val) {
+        console.log("got value" , val)
+        if(val == undefined){
+          bot.reply(message, 'what should I say here? not sure... \n Please use /learn to teach me new tricks!');
+        }else{
+          resp = val["botsay"].toString();
+          bot.reply(message, compose(resp, []) )
+        }
+      });
+
+    });
+
   }
 
 });
