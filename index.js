@@ -121,10 +121,10 @@ controller.on('slash_command', function (bot, message) {
       controller.storage.teams.get(loading, function(err, val) {
         console.log("got value" , val)
         if(val == undefined){
-          bot.reply(message, 'what should I say here? not sure... \n Please use /learn to teach me new tricks!');
+          bot.replyPrivate(message, 'what should I say here? not sure... \n Please use /learn to teach me new tricks!');
         }else{
           resp = val["botsay"].toString();
-          bot.reply(message, compose(resp, []) )
+          bot.replyPrivate(message, compose(resp, []) )
         }
       });
 
