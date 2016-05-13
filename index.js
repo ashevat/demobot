@@ -55,7 +55,7 @@ controller.on('slash_command', function (bot, message) {
         bot.replyPrivate(message, 'Created new persona - '+new_persona.id);
       }
     });
-    
+
   }else if (message.command == '/load-persona'){
     var new_persona_id = message.text.toLowerCase().trim();
     controller.storage.teams.get(new_persona_id , function(err, val) {
@@ -207,7 +207,7 @@ controller.hears('meta-help', ['direct_message', 'direct_mention'], function (bo
 
 
 controller.hears('.*', ['direct_message', 'direct_mention'], function (bot, message) {
-  loadPersonality( function () {
+  /*loadPersonality( function () {
     man_say = message.text.toLowerCase().trim();
     loading  = persona.id+'_voc_'+man_say;
     console.log('Loading key: ', "["+loading+"]");
@@ -222,7 +222,7 @@ controller.hears('.*', ['direct_message', 'direct_mention'], function (bot, mess
       }
     });
 
-  });
+  });*/
 
 
 })
