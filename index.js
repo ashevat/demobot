@@ -37,18 +37,21 @@ controller.on('slash_command', function (bot, message) {
             var  attachments = null;
             if(bot_say.indexOf('"attachments')>0){
                 p_data = JSON.parse(bot_say);
-                attachments = p_data["attachments"]
-
+                attachments = p_data["attachments"];
+                bot_say  = "";
             }
             saving  = persona.id+'_voc/_'+man_say;
             console.log('Saving key, value: ', "["+saving+"],["+bot_say+"}", attachments );
             if(attachments != null){
                 var learning = {id: saving, botsay: bot_say, attachments: attachments};
+                controller.storage.teams.save(learning);
+                bot.replyPrivate(message, 'When you say: '+man_say+' \n I will say: '+p_data)
             }else{
                 var learning = {id: saving, botsay: bot_say};
+                controller.storage.teams.save(learning);
+                bot.replyPrivate(message, 'When you say: '+man_say+' \n I will say: '+bot_say)
             }
-            controller.storage.teams.save(learning);
-            bot.replyPrivate(message, 'When you say: '+man_say+' \n I will say: '+bot_say)
+
         }else if(message.command == '/new-persona'){
 
             var new_persona_id = message.text.toLowerCase().trim();
