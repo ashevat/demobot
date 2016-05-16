@@ -59,11 +59,11 @@ controller.on('slash_command', function (bot, message) {
                 if(val != null){
                     bot.replyPrivate(message, 'I already have this persona');
                 }else{
-                    save_id = team_id+"/"+new_persona_id
+                    save_id = team_id+"_"+new_persona_id
                     new_persona = {id:save_id, persona_name:'Demo Bot', persona_icon: 'http://lorempixel.com/48/48'};
                     controller.storage.teams.save(new_persona);
 
-                    var current_persona = {id: team_id+"/"+'current_persona', data: new_persona};
+                    var current_persona = {id: team_id+"_"+'current_persona', data: new_persona};
                     controller.storage.teams.save(current_persona);
 
                     bot.replyPrivate(message, 'Created new persona - '+new_persona_id);
@@ -72,11 +72,11 @@ controller.on('slash_command', function (bot, message) {
 
         }else if (message.command == '/load-persona'){
             var new_persona_id = message.text.toLowerCase().trim();
-            load_id = team_id+"/"+new_persona_id
+            load_id = team_id+"_"+new_persona_id
             controller.storage.teams.get(load_id , function(err, val) {
                 if(val != null){
                     //console.log('loaded value, new_persona_id -', val, new_persona_id);
-                    var current_persona = {id: team_id+"/"+'current_persona', data: val};
+                    var current_persona = {id: team_id+"_"+'current_persona', data: val};
                     controller.storage.teams.save(current_persona);
 
                     bot.replyPrivate(message, 'Loaded new persona - '+val.id);
@@ -89,7 +89,7 @@ controller.on('slash_command', function (bot, message) {
 
         }else if (message.command == '/set-persona-name'){
             var new_persona_name = message.text.trim();
-            controller.storage.teams.get(team_id+"/"+'current_persona', function(err, val) {
+            controller.storage.teams.get(team_id+"_"+'current_persona', function(err, val) {
                 if(val != null){
                     persona = val.data
                     val.data.persona_name = new_persona_name;
@@ -108,7 +108,7 @@ controller.on('slash_command', function (bot, message) {
 
         }else if (message.command == '/set-persona-icon-url'){
             var new_persona_icon_url = message.text.trim();
-            controller.storage.teams.get(team_id+"/"+'current_persona', function(err, val) {
+            controller.storage.teams.get(team_id+"_"+'current_persona', function(err, val) {
                 if(val != null){
                     persona = val.data
                     val.data.persona_icon = new_persona_icon_url;
@@ -220,7 +220,12 @@ controller.hears('.*', ['direct_message', 'direct_mention'], function (bot, mess
                 bot.reply(message, 'what should I say here? not sure... \n Please use /learn to teach me new tricks!');
             }else{
                 resp = val["botsay"].toString();
-                bot.reply(message, compose(resp, []) )
+                attach = val["attachments"];
+                var attachments = [];
+                if (attach){
+                    attachments = JSON.parse(attach);
+                }
+                bot.reply(message, compose(resp, attachments) )
             }
         });
 
@@ -259,16 +264,16 @@ function compose(text, attachments){
 
 function loadPersonality(team_id, callback) {
     console.log('loadPersonality ');
-    controller.storage.teams.get(team_id+"/"+'current_persona', function(err, val) {
+    controller.storage.teams.get(team_id+"_"+'current_persona', function(err, val) {
         if(val != null){
             persona = val.data
             console.log('calling callback', val.data);
             callback();
         }else{
-            save_id = team_id+"/default"
+            save_id = team_id+"_default"
             new_persona = {id:save_id, persona_name:'Demo Bot', persona_icon: 'http://lorempixel.com/48/48'};
             controller.storage.teams.save(new_persona);
-            var current_persona = {id: team_id+"/"+'current_persona', data: new_persona};
+            var current_persona = {id: team_id+"_"+'current_persona', data: new_persona};
             controller.storage.teams.save(current_persona);
             persona = current_persona.data;
             callback();
