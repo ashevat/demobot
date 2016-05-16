@@ -220,12 +220,11 @@ controller.hears('.*', ['direct_message', 'direct_mention'], function (bot, mess
                 bot.reply(message, 'what should I say here? not sure... \n Please use /learn to teach me new tricks!');
             }else{
                 resp = val["botsay"].toString();
-                attach = val["attachments"];
-                var attachments = [];
-                if (attach){
-                    attachments = JSON.parse(attach);
+                var attach = val["attachments"];
+                if(attach == undefined || attach == null){
+                    attach = []
                 }
-                bot.reply(message, compose(resp, attachments) )
+                bot.reply(message, compose(resp, attach) )
             }
         });
 
