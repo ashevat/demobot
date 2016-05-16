@@ -35,7 +35,7 @@ controller.on('slash_command', function (bot, message) {
             man_say = man_say.toLowerCase().trim();
             bot_say = bot_say.trim();
             var  attachments = null;
-            if(bot_say.indexOf('"attachments":')>0){
+            if(bot_say.indexOf('"attachments')>0){
                 p_data = JSON.parse(bot_say);
                 attachments = p_data["attachments"]
 
