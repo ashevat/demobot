@@ -152,12 +152,6 @@ beepboop.on('botkit.rtm.started', function (bot, resource, meta) {
 */
 
 
-setTimeout(function () {
-    controller.spawn({token: process.env.token}).startRTM().say({
-    text: 'hello',
-    channel: 'D15UXHBL5'
-});
-},3000);
 
 
 controller.on('bot_channel_join', function (bot, message) {
