@@ -127,6 +127,14 @@ controller.on('slash_command', function (bot, message) {
 
         }else{
             bot.replyPublic(message, "");
+
+            bot.say(
+                {
+                    text: 'my message text',
+                    channel: message.channel // a valid slack channel, group, mpim, or im ID
+                }
+            );
+
         }
     });
 
@@ -171,6 +179,8 @@ con.on('add_resource', function (message) {
 controller.on('bot_channel_join', function (bot, message) {
     bot.reply(message, "Hello team :wave: I am your WordsBot - give me a word and I will provide you with Definition and Synonyms. \n I support direct mentions and DMs, I will not read what is in this channel,  you will need to `@wordsbot: word-you-are-looking-for` me.")
 })
+
+
 
 controller.hears(['hello', 'hi'], ['direct_mention'], function (bot, message) {
     bot.reply(message, ':wave:')
