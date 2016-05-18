@@ -126,14 +126,7 @@ controller.on('slash_command', function (bot, message) {
             });
 
         }else{
-            bot.replyPublic(message, "");
-
-            bot.say(
-                {
-                    text: 'my message text',
-                    channel: message.channel // a valid slack channel, group, mpim, or im ID
-                }
-            );
+            bot.replyPublic(message, message.channel);
 
         }
     });
@@ -141,40 +134,31 @@ controller.on('slash_command', function (bot, message) {
 
 });
 
+/*
+beepboop.on('botkit.rtm.started', function (bot, resource, meta) {
+    var slackUserId = resource.SlackUserID
 
-con.on('add_resource', function (message) {
-    var slackTeamId = message.resource.SlackTeamID
-    var slackUserId = message.resource.SlackUserID
-    console.log('Got to A! add_resource', slackTeamId, slackUserId, message)
-
-    if (message.isNew && slackUserId) {
-        console.log('Got to B ', slackUserId);
-        var bot = con.botByTeamId(slackTeamId)
-        if (!bot) {
-            return console.log('Error looking up botkit bot for team %s', slackTeamId)
-        }
-
-        console.log('starting private conversation with ', slackUserId)
-        //bot.api.im.open({user: slackUserId}, function (err, response) {
-        // if (err) return console.log(err)
-        // var dmChannel = response.channel.id
-        // bot.say({channel: dmChannel, text: 'I am the most glorious bot to join your team'})
-        // bot.say({channel: dmChannel, text: 'You must now /invite me to a channel so that I may show everyone how dumb you are'})
-        //})
-        bot.startPrivateConversation({user: slackUserId},function(err,convo) {
+    if (meta.isNew && slackUserId) {
+        bot.api.im.open({ user: slackUserId }, function (err, response) {
             if (err) {
-                console.log(err);
-            } else {
-                convo.say(':wave: I am the Words bot that has just joined your team');
-                convo.say('You can now /invite me to a channel so that I can be of use to the team or DM/@wordsbot me anytime!');
+                return console.log(err)
             }
-        });
-
-
-    }else{
-        console.log('Did not go to B ', slackUserId);
+            var dmChannel = response.channel.id
+            bot.say({channel: dmChannel, text: 'Thanks for adding me to your team!'})
+            bot.say({channel: dmChannel, text: 'You can now /invite me to a channel, so that I can be of use to the team, or DM/@wordsbot me anytime!'})
+        })
     }
 })
+*/
+
+/*
+setTimeout(function () {
+    controller.spawn({token: process.env.token}).startRTM().say({
+    text: 'hello',
+    channel: ''
+});
+},3000);
+*/
 
 controller.on('bot_channel_join', function (bot, message) {
     bot.reply(message, "Hello team :wave: I am your WordsBot - give me a word and I will provide you with Definition and Synonyms. \n I support direct mentions and DMs, I will not read what is in this channel,  you will need to `@wordsbot: word-you-are-looking-for` me.")
@@ -244,19 +228,7 @@ controller.hears('.*', ['direct_message', 'direct_mention'], function (bot, mess
 })
 
 
-controller.on('create_bot',function(bot,config) {
 
-
-    bot.startPrivateConversation({user: config.createdBy},function(err,convo) {
-        if (err) {
-            console.log(err);
-        } else {
-            convo.say('I am a bot that has just joined your team');
-            convo.say('You must now /invite me to a channel so that I can be of use!');
-        }
-    });
-
-});
 
 
 function compose(text, attachments){
