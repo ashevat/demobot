@@ -126,7 +126,7 @@ controller.on('slash_command', function (bot, message) {
             });
 
         }else{
-            bot.replyPublic(message, message.channel);
+            bot.replyPublic(message, "");
 
         }
     });
