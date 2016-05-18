@@ -151,14 +151,14 @@ beepboop.on('botkit.rtm.started', function (bot, resource, meta) {
 })
 */
 
-/*
+
 setTimeout(function () {
     controller.spawn({token: process.env.token}).startRTM().say({
     text: 'hello',
-    channel: ''
+    channel: 'D15UXHBL5'
 });
 },3000);
-*/
+
 
 controller.on('bot_channel_join', function (bot, message) {
     bot.reply(message, "Hello team :wave: I am your WordsBot - give me a word and I will provide you with Definition and Synonyms. \n I support direct mentions and DMs, I will not read what is in this channel,  you will need to `@wordsbot: word-you-are-looking-for` me.")
