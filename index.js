@@ -160,35 +160,22 @@ controller.on('bot_channel_join', function (bot, message) {
 
 
 
-//controller.hears(['hello', 'hi'], ['direct_mention'], function (bot, message) {
-//    bot.reply(message, ':wave:')
-//})
+controller.hears(['hello', 'hi'], ['direct_mention'], function (bot, message) {
+    bot.reply(message, ':wave:')
+})
 
-// reply to a direct mention - @bot hello
-controller.on('ambient',function(bot,message) {
-    // reply to _message_ by using the _bot_ object
-    console.log('mention msg - ', message);
-    bot.reply(message,'I heard you talk!');
-});
 
-//controller.on('message_received', function(bot, message) {
-//    console.log('any msg - ', message);
-//    bot.reply(message, 'I heard... something!');
-//});
 
-// uncomment -
-/*
 controller.hears(['hello', 'hi'], ['direct_message'], function (bot, message) {
     //var ds = kv.get("hello", function (err, val) {})
     bot.reply(message, 'Hello. ')
     bot.reply(message, 'It\'s nice to talk to you directly. Give me a word and I will provide you with Definition and Synonyms')
 })
-*/
 
 
 
-// uncomment -
-/*
+
+
 controller.hears('meta-help', ['direct_message', 'direct_mention'], function (bot, message) {
     var help = 'I will respond to the following messages: \n' +
         '`DM` me with a word.\n' +
@@ -197,12 +184,10 @@ controller.hears('meta-help', ['direct_message', 'direct_mention'], function (bo
         '`bot help` to see this again.'
     bot.reply(message, help)
 })
-*/
 
 
-// uncomment -
-/*
-controller.hears('.*', ['direct_message', 'direct_mention', 'message_received'], function (bot, message) {
+
+controller.hears('.*', ['direct_message', 'direct_mention', 'ambient'], function (bot, message) {
     console.log('msg - ', message);
     var team_id = message.team;
     loadPersonality(team_id, function () {
@@ -228,7 +213,7 @@ controller.hears('.*', ['direct_message', 'direct_mention', 'message_received'],
 
 
 })
-*/
+
 
 function compose(text, attachments){
     console.log('compose for persona ', persona);
