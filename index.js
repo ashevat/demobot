@@ -160,9 +160,16 @@ controller.on('bot_channel_join', function (bot, message) {
 
 
 
-controller.hears(['hello', 'hi'], ['direct_mention'], function (bot, message) {
-    bot.reply(message, ':wave:')
-})
+//controller.hears(['hello', 'hi'], ['direct_mention'], function (bot, message) {
+//    bot.reply(message, ':wave:')
+//})
+
+// reply to a direct mention - @bot hello
+controller.on('direct_mention',function(bot,message) {
+    // reply to _message_ by using the _bot_ object
+    console.log('mention msg - ', message);
+    bot.reply(message,'I heard you mention me!');
+});
 
 controller.hears(['hello', 'hi'], ['direct_message'], function (bot, message) {
     //var ds = kv.get("hello", function (err, val) {})
@@ -227,12 +234,7 @@ controller.on('message_received', function(bot, message) {
     bot.reply(message, 'I heard... something!');
 });
 
-// reply to a direct mention - @bot hello
-controller.on('direct_mention',function(bot,message) {
-    // reply to _message_ by using the _bot_ object
-    console.log('mention msg - ', message);
-    bot.reply(message,'I heard you mention me!');
-});
+
 
 
 
