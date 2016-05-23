@@ -222,11 +222,9 @@ controller.hears('.*', ['direct_message', 'direct_mention', 'message_received'],
 })
 
 
-controller.hears('keyword',['message_received'],function(bot,message) {
-
-    // do something to respond to message
-    bot.reply(message,'You used a keyword!');
-
+controller.on('message_received', function(bot, message) {
+    console.log('any msg - ', message);
+    bot.reply(message, 'I heard... something!');
 });
 
 
