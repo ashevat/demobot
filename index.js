@@ -129,7 +129,10 @@ controller.on('slash_command', function (bot, message) {
             var setting = message.text.trim();
             var key = setting.substring(0, setting.indexOf(" ")).trim();
             var value = setting.substring(setting.indexOf(" ")).trim();
-            console.log('Saving key, value: ', "["+key+"],["+value+"}" );
+            console.log('Saving key, value: ', "["+key+"],["+value+"]" );
+            save_id = team_id+"_setting/"+key;
+            new_persona = {id:save_id, value:value};
+            controller.storage.teams.save(new_persona);
 
         }else{
             bot.replyPublic(message, "");
@@ -204,7 +207,10 @@ controller.hears('.*', ['direct_message', 'direct_mention', 'ambient'], function
         controller.storage.teams.get(loading, function(err, val) {
             console.log("got value" , val)
             if(val == undefined){
-                bot.reply(message, compose('what should I say here? not sure... \n Please use /learn to teach me new tricks!', [] ));
+                console.log('what should I say when you say "'+man_say+'"');
+                if(message.event != "ambient"){
+                    bot.reply(message, compose('what should I say when you say "'+man_say+'"? not sure... \n Please use /learn to teach me new tricks!', [] ));
+                }
             }else{
                 resp = val["botsay"].toString();
                 var attach = val["attachments"];
