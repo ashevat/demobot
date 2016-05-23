@@ -165,7 +165,7 @@ controller.on('bot_channel_join', function (bot, message) {
 //})
 
 // reply to a direct mention - @bot hello
-controller.on('message_received',function(bot,message) {
+controller.on('ambient',function(bot,message) {
     // reply to _message_ by using the _bot_ object
     console.log('mention msg - ', message);
     bot.reply(message,'I heard you talk!');
