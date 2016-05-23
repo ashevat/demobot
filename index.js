@@ -125,6 +125,12 @@ controller.on('slash_command', function (bot, message) {
                 }
             });
 
+        }else if (message.command == 'demo-setting'){
+            var setting = message.text.trim();
+            var key = setting.substring(0, setting.indexOf(" ")).trim();
+            var value = setting.substring(setting.indexOf(" ")).trim();
+            console.log('Saving key, value: ', "["+key+"],["+value+"}" );
+
         }else{
             bot.replyPublic(message, "");
 
@@ -198,7 +204,7 @@ controller.hears('.*', ['direct_message', 'direct_mention', 'ambient'], function
         controller.storage.teams.get(loading, function(err, val) {
             console.log("got value" , val)
             if(val == undefined){
-                bot.reply(message, 'what should I say here? not sure... \n Please use /learn to teach me new tricks!');
+                bot.reply(message, compose(resp, 'what should I say here? not sure... \n Please use /learn to teach me new tricks!'));
             }else{
                 resp = val["botsay"].toString();
                 var attach = val["attachments"];
