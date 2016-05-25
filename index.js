@@ -45,7 +45,6 @@ controller.hears(['hello', 'hi', 'hola'], ['direct_message'], function (bot, mes
 
 
 
-
 var persona = {id:"default", persona_name:'Demo Bot', persona_icon: 'http://lorempixel.com/48/48'};
 
 
