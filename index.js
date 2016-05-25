@@ -14,6 +14,38 @@ var controller = Botkit.slackbot({
 var con = require('beepboop-botkit').start(controller)
 //var kv = require('beepboop-persist')()
 
+
+
+
+controller.hears(['hello', 'hi'], ['direct_message'], function (bot, message) {
+    bot.reply(message, 'Hello. ')
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var persona = {id:"default", persona_name:'Demo Bot', persona_icon: 'http://lorempixel.com/48/48'};
 
 
@@ -189,11 +221,7 @@ controller.hears(['hello', 'hi'], ['direct_mention'], function (bot, message) {
 
 
 
-controller.hears(['hello', 'hi'], ['direct_message'], function (bot, message) {
-    //var ds = kv.get("hello", function (err, val) {})
-    bot.reply(message, 'Hello. ')
-    bot.reply(message, 'It\'s nice to talk to you directly. Give me a word and I will provide you with Definition and Synonyms')
-})
+
 
 
 
