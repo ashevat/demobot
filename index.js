@@ -133,6 +133,20 @@ controller.on('slash_command', function (bot, message) {
             save_id = team_id+"_setting/"+key;
             new_persona = {id:save_id, value:value};
             controller.storage.teams.save(new_persona);
+            bot.replyPublic(message, "");
+
+        }else if (message.command == '/persona-set-notification'){
+
+            var setting = message.text.trim();
+            var key = setting.substring(0, setting.indexOf(" ")).trim();
+            var interval = setting.substring(setting.indexOf(" "),setting.indexOf("\n")).trim();
+            var bot_say = learn.substr(setting.indexOf("\n")+1);
+            console.log('Saving notification key, interval, bot_say - ', "["+key+"],["+interval+"],["+bot_say+"]" );
+            //save_id = team_id+"_notification/"+key;
+            //new_persona = {id:save_id, value:value};
+            //controller.storage.teams.save(new_persona);
+
+            bot.replyPublic(message, "");
 
         }else{
             bot.replyPublic(message, "");
