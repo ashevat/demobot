@@ -10,15 +10,13 @@ var controller = Botkit.slackbot({
 });
 
 
-//var controller = Botkit.slackbot()
 var con = require('beepboop-botkit').start(controller)
-//var kv = require('beepboop-persist')()
 
 
 
 
 controller.hears(['hello', 'hi'], ['direct_message'], function (bot, message) {
-    bot.reply(message, 'Hello :wave:. ')
+    bot.reply(message, 'Hello. ')
 })
 
 
