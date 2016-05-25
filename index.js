@@ -250,7 +250,7 @@ controller.hears('.*', ['direct_message', 'direct_mention', 'ambient'], function
             if(val == undefined){
                 console.log('what should I say when you say "'+man_say+'"');
                 if(message.event != "ambient"){
-                    bot.reply(message, compose('what should I say when you say "'+man_say+'"? not sure... \n Please use /learn to teach me new tricks!', [] ));
+                    //bot.reply(message, compose('what should I say when you say "'+man_say+'"? not sure... \n Please use /learn to teach me new tricks!', [] ));
                 }
             }else{
                 resp = val["botsay"].toString();
