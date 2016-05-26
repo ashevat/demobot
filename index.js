@@ -53,7 +53,7 @@ controller.setupWebserver(process.env.PORT,function(err,webserver) {
 
 function cleanKey(key) {
     // strings and can't contain ".", "#", "$", "/", "[", or "]"
-    return key.toLowerCase().replace(".","").replace("?","").replace("/","").replace("[","").replace("]","").replace("#","").trim()
+    return key.toLowerCase().replace(".","").replace("?","").replace("$","").replace("/","").replace("[","").replace("]","").replace("#","").trim()
 }
 
 controller.on('slash_command', function (bot, message) {
