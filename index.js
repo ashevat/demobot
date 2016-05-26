@@ -14,9 +14,9 @@ var con = require('beepboop-botkit').start(controller)
 
 
 
-//controller.hears(['hello', 'hi', 'hola'], ['direct_message'], function (bot, message) {
-//    bot.reply(message, 'Hello :wave: . ')
-//})
+controller.hears(['hello', 'hi', 'hola'], ['direct_message'], function (bot, message) {
+    bot.reply(message, 'Hello :wave: . ')
+})
 
 
 
