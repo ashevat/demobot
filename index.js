@@ -67,6 +67,10 @@ controller.on('slash_command', function (bot, message) {
             var bot_say = learn.substr(learn.indexOf("\n")+1);
             man_say = cleanKey(man_say);
             bot_say = bot_say.trim();
+            if(man_say == "" || bot_say == ""){
+                bot.replyPrivate(message, 'missing param - you say is ('+man_say+') I say is ('+bot_say+') ');
+                return;
+            }
             var  attachments = null;
             if(bot_say.indexOf('"attachments')>0){
                 p_data = JSON.parse(bot_say);
