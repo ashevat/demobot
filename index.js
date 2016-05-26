@@ -51,6 +51,11 @@ controller.setupWebserver(process.env.PORT,function(err,webserver) {
     controller.createWebhookEndpoints(webserver);
 });
 
+function cleanKey(key) {
+    // strings and can't contain ".", "#", "$", "/", "[", or "]"
+    return key.toLowerCase().replace(".","").replace("?","").replace("/","").replace("[","").replace("]","").replace("#","").trim()
+}
+
 controller.on('slash_command', function (bot, message) {
     console.log('Here is the actual slash command used: ', message.command);
     var team_id  = message.team_id;
@@ -60,7 +65,7 @@ controller.on('slash_command', function (bot, message) {
             var learn = message.text
             var man_say = learn.substr(0, learn.indexOf("\n")-1);
             var bot_say = learn.substr(learn.indexOf("\n")+1);
-            man_say = man_say.toLowerCase().trim();
+            man_say = cleanKey(man_say);
             bot_say = bot_say.trim();
             var  attachments = null;
             if(bot_say.indexOf('"attachments')>0){
@@ -82,7 +87,7 @@ controller.on('slash_command', function (bot, message) {
 
         }else if(message.command == '/new-persona'){
 
-            var new_persona_id = message.text.toLowerCase().trim();
+            var new_persona_id = cleanKey(message.text);
             controller.storage.teams.get(new_persona_id , function(err, val) {
                 if(val != null){
                     bot.replyPrivate(message, 'I already have this persona');
@@ -99,7 +104,7 @@ controller.on('slash_command', function (bot, message) {
             });
 
         }else if (message.command == '/load-persona'){
-            var new_persona_id = message.text.toLowerCase().trim();
+            var new_persona_id = cleanKey(message.text);
             load_id = team_id+"_"+new_persona_id
             controller.storage.teams.get(load_id , function(err, val) {
                 if(val != null){
@@ -238,7 +243,7 @@ controller.hears('.*', ['direct_message', 'direct_mention', 'ambient'], function
     console.log('msg - ', message);
     var team_id = message.team;
     loadPersonality(team_id, function () {
-        man_say = message.text.toLowerCase().trim();
+        man_say = cleanKey(message.text);
         loading  = persona.id+'_voc/_'+man_say;
         console.log('Loading key: ', "["+loading+"]");
 
