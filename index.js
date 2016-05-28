@@ -286,11 +286,11 @@ function getRandomColor() {
     return color;
 }
 
-var helpText = '*What is the Demo Bot*'+
-'> :bot: The Demo Bot is an easy to script bot - you simply talk to the bot and teach it what to answer when you say something. The Demo bot supports multiple scripts (personalities) alongside the ability to change it’s name and icon for each.'+
-'*How to use the Demo Bot*'+
+var helpText = ' *What is the Demo Bot* \n'+
+':bot: The Demo Bot is an easy to script bot - you simply talk to the bot and teach it what to answer when you say something. The Demo bot supports multiple scripts (personalities) alongside the ability to change it’s name and icon for each. \n'+
+'\n*How to use the Demo Bot*'+
 '> The bot can learn to reply to any text you send, either in DM or in channel in which the bot was invited to.\n'+
-'*Working with your bot*\n'+
+'\n*Working with your bot*\n'+
 '* Add the bot to your team and invite it to the appropriate channels (https://beepboophq.com/bots/1d563b4601d44aeca2bda92547894460).\n'+
 '* Use `/add-persona [persona name]` to start a new script (this will automatically switch to the newly created persona)\n'+
 '* Use `/set-persona-name [display name]` to set the name the bot will use to display in this script\n'+
@@ -298,8 +298,8 @@ var helpText = '*What is the Demo Bot*'+
     '* Use `/load-persona [persona name]` to switch between scripts\n'+
     '* Use `/learn [you say] \n [bot say]` to teach the bot new tricks, see _Training  your bot_ for more details.\n'+
         '* Run the script by just saying your part of the script the let the bot follow\n'+
-        '*Training  your bot*\n'+
-        '> Use the `/learn [you say] \n [bot say]` slash command to teach the bot what to say. Note the new-line between what you say and what the bot say (Use `shift`+`enter`)\n'+
+        '\n*Training  your bot*\n'+
+        'Use the `/learn [you say] \n [bot say]` slash command to teach the bot what to say. Note the new-line between what you say and what the bot say (Use `shift`+`enter`)\n'+
         'Here are a few examples:\n'+
             '* Human say “wazzap?” the bot will say ":wave: all good" -\n'+
         '`/learn wazzap?`\n'+
