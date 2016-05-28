@@ -190,19 +190,14 @@ beepboop.on('botkit.rtm.started', function (bot, resource, meta) {
 
 
 controller.on('bot_channel_join', function (bot, message) {
-    bot.reply(message, "Hello team :wave: I am your WordsBot - give me a word and I will provide you with Definition and Synonyms. \n I support direct mentions and DMs, I will not read what is in this channel,  you will need to `@wordsbot: word-you-are-looking-for` me.")
+    bot.reply(message, ":wave: team -  I am your WordsBot - give me a word and I will provide you with Definition and Synonyms. \n I support direct mentions and DMs, I will not read what is in this channel,  you will need to `@wordsbot: word-you-are-looking-for` me.")
 })
 
 
 
-controller.hears(['hello', 'hi'], ['direct_mention'], function (bot, message) {
-    bot.reply(message, ':wave:')
-})
-
-
-
-
-
+//controller.hears(['hello', 'hi'], ['direct_mention'], function (bot, message) {
+//    bot.reply(message, ':wave:')
+//})
 
 
 
