@@ -132,7 +132,7 @@ controller.on('slash_command', function (bot, message) {
         }else if (message.command == '/list-personas'){
             controller.storage.teams.get(team_id+"_personas", function(err, val) {
                 if(val != null){
-                    bot.replyPrivate(message, 'Personas -  '+ val.data.toJSON());
+                    bot.replyPrivate(message, 'Personas -  '+ val.data);
                 }else{
                     bot.replyPrivate(message, 'No Personas');
                 }
