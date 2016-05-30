@@ -138,24 +138,33 @@ controller.on('slash_command', function (bot, message) {
                 }
             });
 
-        }else if (message.command == '/set-persona-icon-url'){
-                var new_persona_icon_url = message.text.trim();
-                controller.storage.teams.get(team_id+"_"+'current_persona', function(err, val) {
-                    if(val != null){
-                        persona = val.data
-                        val.data.persona_icon = new_persona_icon_url;
-                        controller.storage.teams.save(val);
-                        persona_id = val.data.id;
-                        controller.storage.teams.get(persona_id, function(err, val1) {
-                            if(val1 != null){
-                                val1.persona_icon = new_persona_icon_url;
-                                controller.storage.teams.save(val1);
-                                bot.replyPrivate(message, 'From now on I shall use a new icon - '+new_persona_icon_url);
+        }else if (message.command == '/export-persona'){
+            bot.api.files.upload({ filename: filename, content: "hello world", filetype: 'text', channels: message.channel }, function(err,res) {
+                if (err) {
+                    bot.replyPrivate(message, 'can not export!');
+                    console.log(err)
+                    return;
+                }
+            });
 
-                            }
-                        });
-                    }
-                });
+        }else if (message.command == '/set-persona-icon-url'){
+            var new_persona_icon_url = message.text.trim();
+            controller.storage.teams.get(team_id+"_"+'current_persona', function(err, val) {
+                if(val != null){
+                    persona = val.data
+                    val.data.persona_icon = new_persona_icon_url;
+                    controller.storage.teams.save(val);
+                    persona_id = val.data.id;
+                    controller.storage.teams.get(persona_id, function(err, val1) {
+                        if(val1 != null){
+                            val1.persona_icon = new_persona_icon_url;
+                            controller.storage.teams.save(val1);
+                            bot.replyPrivate(message, 'From now on I shall use a new icon - '+new_persona_icon_url);
+
+                        }
+                    });
+                }
+            });
 
         }else if (message.command == '/demo-setting'){
             var setting = message.text.trim();
@@ -316,6 +325,7 @@ var helpText = ' *What is the Demo Bot* \n'+
 '* Use `/add-persona [persona name]` to start a new script (this will automatically switch to the newly created persona)\n'+
 '* Use `/set-persona-name [display name]` to set the name the bot will use to display in this script\n'+
 '* Use `/set-persona-icon-url [URL]` to set the icon the bot will use in this script.\n'+
+    '* Use `/list-personas` list known personas.\n'+
     '* Use `/load-persona [persona name]` to switch between scripts\n'+
     '* Use `/learn [you say] \\n [bot say]` to teach the bot new tricks, see _Training  your bot_ for more details.\n'+
         '* Run the script by just saying your part of the script the let the bot follow\n'+
