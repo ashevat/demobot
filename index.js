@@ -139,8 +139,8 @@ controller.on('slash_command', function (bot, message) {
             });
 
         }else if (message.command == '/export-persona'){
-            call_config = { filename: "persona_export.txt" , content: "hello world", filetype: 'text', channels: message.channel}
-            bot.upload(call_config, function(err,res) {
+            /*call_config = { filename: "persona_export.txt" , content: "hello world", filetype: 'text', channels: message.channel}
+            bot.api.files.upload(call_config, function(err,res) {
 
                 if (err) {
                     bot.replyPrivate(message, 'can not export!');
@@ -148,7 +148,8 @@ controller.on('slash_command', function (bot, message) {
                     return;
                 }
             });
-
+            */
+            bot.replyPrivate(message, 'coming soon!');
         }else if (message.command == '/set-persona-icon-url'){
             var new_persona_icon_url = message.text.trim();
             controller.storage.teams.get(team_id+"_"+'current_persona', function(err, val) {
