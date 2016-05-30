@@ -139,11 +139,11 @@ controller.on('slash_command', function (bot, message) {
             });
 
         }else if (message.command == '/export-persona'){
-            call_config = { filename: "persona_export.txt" , content: "hello world", filetype: 'text', channels: message.channel, token: bot.token }
+            call_config = { filename: "persona_export.txt" , content: "hello world", filetype: 'text', channels: message.channel}
             bot.api.files.upload(call_config, function(err,res) {
                 if (err) {
                     bot.replyPrivate(message, 'can not export!');
-                    console.log(err, bot)
+                    console.log(err, bot.config)
                     return;
                 }
             });
