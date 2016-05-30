@@ -78,6 +78,16 @@ controller.on('slash_command', function (bot, message) {
                     var current_persona = {id: team_id+"_"+'current_persona', data: new_persona};
                     controller.storage.teams.save(current_persona);
 
+                    load_id = team_id+"_personas"
+                    controller.storage.teams.get(load_id , function(err, val) {
+                        if(val != null){
+                            val.data.push(new_persona_id)
+                            controller.storage.teams.save(val);
+                        }else{
+                            var personas = {id: team_id+"_personas", data: [new_persona_id]};
+                        }
+                    });
+
                     bot.replyPrivate(message, 'Created new persona - '+new_persona_id);
                 }
             });
@@ -287,14 +297,14 @@ function getRandomColor() {
 }
 
 var helpText = ' *What is the Demo Bot* \n'+
-':bot: The Demo Bot is an easy to script bot - you simply talk to the bot and teach it what to answer when you say something. The Demo bot supports multiple scripts (personalities) alongside the ability to change it’s name and icon for each. \n'+
+':robot_face: The Demo Bot is an easy to script bot - you simply talk to the bot and teach it what to answer when you say something. The Demo bot supports multiple scripts (personalities) alongside the ability to change it’s name and icon for each. \n'+
 '\n*How to use the Demo Bot*'+
 '> The bot can learn to reply to any text you send, either in DM or in channel in which the bot was invited to.\n'+
 '\n*Working with your bot*\n'+
 '* Add the bot to your team and invite it to the appropriate channels (https://beepboophq.com/bots/1d563b4601d44aeca2bda92547894460).\n'+
 '* Use `/add-persona [persona name]` to start a new script (this will automatically switch to the newly created persona)\n'+
 '* Use `/set-persona-name [display name]` to set the name the bot will use to display in this script\n'+
-'    * Use `/set-persona-icon-url [URL]` to set the icon the bot will use in this script.\n'+
+'* Use `/set-persona-icon-url [URL]` to set the icon the bot will use in this script.\n'+
     '* Use `/load-persona [persona name]` to switch between scripts\n'+
     '* Use `/learn [you say] \n [bot say]` to teach the bot new tricks, see _Training  your bot_ for more details.\n'+
         '* Run the script by just saying your part of the script the let the bot follow\n'+
