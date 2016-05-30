@@ -85,6 +85,7 @@ controller.on('slash_command', function (bot, message) {
                             controller.storage.teams.save(val);
                         }else{
                             var personas = {id: team_id+"_personas", data: [new_persona_id]};
+                            controller.storage.teams.save(personas);
                         }
                     });
 
@@ -132,6 +133,8 @@ controller.on('slash_command', function (bot, message) {
             controller.storage.teams.get(team_id+"_personas", function(err, val) {
                 if(val != null){
                     bot.replyPrivate(message, 'Personas -  '+ val.data.toJSON());
+                }else{
+                    bot.replyPrivate(message, 'No Personas');
                 }
             });
 
@@ -314,7 +317,7 @@ var helpText = ' *What is the Demo Bot* \n'+
 '* Use `/set-persona-name [display name]` to set the name the bot will use to display in this script\n'+
 '* Use `/set-persona-icon-url [URL]` to set the icon the bot will use in this script.\n'+
     '* Use `/load-persona [persona name]` to switch between scripts\n'+
-    '* Use `/learn [you say] \n [bot say]` to teach the bot new tricks, see _Training  your bot_ for more details.\n'+
+    '* Use `/learn [you say] \\n [bot say]` to teach the bot new tricks, see _Training  your bot_ for more details.\n'+
         '* Run the script by just saying your part of the script the let the bot follow\n'+
         '\n*Training  your bot*\n'+
         'Use the `/learn [you say] \n [bot say]` slash command to teach the bot what to say. Note the new-line between what you say and what the bot say (Use `shift`+`enter`)\n'+
