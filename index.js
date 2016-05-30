@@ -139,7 +139,7 @@ controller.on('slash_command', function (bot, message) {
             });
 
         }else if (message.command == '/export-persona'){
-            bot.api.files.upload({ filename: "persona_export.txt" , content: "hello world", filetype: 'text', channels: message.channel }, function(err,res) {
+            bot.api.files.upload({ filename: "persona_export.txt" , content: "hello world", filetype: 'text', channels: message.channel, token: bot.token }, function(err,res) {
                 if (err) {
                     bot.replyPrivate(message, 'can not export!');
                     console.log(err)
