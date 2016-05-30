@@ -128,24 +128,31 @@ controller.on('slash_command', function (bot, message) {
                 }
             });
 
-        }else if (message.command == '/set-persona-icon-url'){
-            var new_persona_icon_url = message.text.trim();
-            controller.storage.teams.get(team_id+"_"+'current_persona', function(err, val) {
+        }else if (message.command == '/list-personas'){
+            controller.storage.teams.get(team_id+"_personas", function(err, val) {
                 if(val != null){
-                    persona = val.data
-                    val.data.persona_icon = new_persona_icon_url;
-                    controller.storage.teams.save(val);
-                    persona_id = val.data.id;
-                    controller.storage.teams.get(persona_id, function(err, val1) {
-                        if(val1 != null){
-                            val1.persona_icon = new_persona_icon_url;
-                            controller.storage.teams.save(val1);
-                            bot.replyPrivate(message, 'From now on I shall use a new icon - '+new_persona_icon_url);
-
-                        }
-                    });
+                    bot.replyPrivate(message, 'Personas -  '+ val.data.toJSON());
                 }
             });
+
+        }else if (message.command == '/set-persona-icon-url'){
+                var new_persona_icon_url = message.text.trim();
+                controller.storage.teams.get(team_id+"_"+'current_persona', function(err, val) {
+                    if(val != null){
+                        persona = val.data
+                        val.data.persona_icon = new_persona_icon_url;
+                        controller.storage.teams.save(val);
+                        persona_id = val.data.id;
+                        controller.storage.teams.get(persona_id, function(err, val1) {
+                            if(val1 != null){
+                                val1.persona_icon = new_persona_icon_url;
+                                controller.storage.teams.save(val1);
+                                bot.replyPrivate(message, 'From now on I shall use a new icon - '+new_persona_icon_url);
+
+                            }
+                        });
+                    }
+                });
 
         }else if (message.command == '/demo-setting'){
             var setting = message.text.trim();
@@ -280,11 +287,12 @@ function loadPersonality(team_id, callback) {
             var current_persona = {id: team_id+"_"+'current_persona', data: new_persona};
             controller.storage.teams.save(current_persona);
             persona = current_persona.data;
+            personas = {id: team_id+"_personas", data: ["default"]};
+            controller.storage.teams.save(personas);
             callback();
         }
     });
 }
-
 
 
 function getRandomColor() {
