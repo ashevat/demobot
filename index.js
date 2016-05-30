@@ -143,7 +143,7 @@ controller.on('slash_command', function (bot, message) {
             bot.api.files.upload(call_config, function(err,res) {
                 if (err) {
                     bot.replyPrivate(message, 'can not export!');
-                    console.log(err, message)
+                    console.log(err, con)
                     return;
                 }
             });
