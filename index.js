@@ -140,10 +140,11 @@ controller.on('slash_command', function (bot, message) {
 
         }else if (message.command == '/export-persona'){
             call_config = { filename: "persona_export.txt" , content: "hello world", filetype: 'text', channels: message.channel}
-            bot.api.files.upload(call_config, function(err,res) {
+            bot.upload(call_config, function(err,res) {
+
                 if (err) {
                     bot.replyPrivate(message, 'can not export!');
-                    console.log(err, con)
+                    console.log(err, bot)
                     return;
                 }
             });
