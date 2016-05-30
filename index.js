@@ -149,6 +149,7 @@ controller.on('slash_command', function (bot, message) {
                 }
             });
             */
+            
             bot.replyPrivate(message, 'coming soon!');
         }else if (message.command == '/set-persona-icon-url'){
             var new_persona_icon_url = message.text.trim();
