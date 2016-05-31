@@ -12,10 +12,6 @@ var controller = Botkit.slackbot({
 var con = require('beepboop-botkit').start(controller)
 
 
-controller.hears(['hello', 'hi', 'hola'], ['direct_message'], function (bot, message) {
-    bot.reply(message, helpText)
-})
-
 
 var persona = {id:"default", persona_name:'Demo Bot', persona_icon: 'http://lorempixel.com/48/48'};
 
@@ -149,7 +145,7 @@ controller.on('slash_command', function (bot, message) {
                 }
             });
             */
-            
+
             bot.replyPrivate(message, 'coming soon!');
         }else if (message.command == '/set-persona-icon-url'){
             var new_persona_icon_url = message.text.trim();
@@ -223,7 +219,7 @@ beepboop.on('botkit.rtm.started', function (bot, resource, meta) {
 
 
 controller.on('bot_channel_join', function (bot, message) {
-    bot.reply(message, ":wave: team -  I am your WordsBot - give me a word and I will provide you with Definition and Synonyms. \n I support direct mentions and DMs, I will not read what is in this channel,  you will need to `@wordsbot: word-you-are-looking-for` me.")
+    bot.reply(message, ":wave: team -  I am your demo bot. \n I support direct mentions and DMs, I will read what is in this channel and try to respond accordingly -  you can also `@demobot: help` me.")
 })
 
 
@@ -235,15 +231,9 @@ controller.on('bot_channel_join', function (bot, message) {
 
 
 
-controller.hears('meta-help', ['direct_message', 'direct_mention'], function (bot, message) {
-    var help = 'I will respond to the following messages: \n' +
-        '`DM` me with a word.\n' +
-        '`@wordsbot:` with a word.\n' +
-        '`/define` with a word (this way only you see the results).\n' +
-        '`bot help` to see this again.'
-    bot.reply(message, help)
+controller.hears(['^help$'], ['direct_message', 'direct_mention'], function (bot, message) {
+    bot.reply(message, helpText)
 })
-
 
 
 controller.hears('.*', ['direct_message', 'direct_mention', 'ambient'], function (bot, message) {
