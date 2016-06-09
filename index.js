@@ -210,7 +210,7 @@ controller.on('slash_command', function (bot, message) {
                                 if(val1 != null){
                                     val1.persona_icon = new_persona_icon_url;
                                     controller.storage.teams.save(val1);
-                                    bot.replyPrivate(message, 'From now on I shall be called Sir '+new_persona_name);
+                                    bot.replyPrivate(message, 'From now on I shall use a new icon - '+new_persona_icon_url);
 
                                 }
                             });
@@ -443,6 +443,9 @@ var helpText = ' *What is the Demo Bot* \n'+
 '* Use `/set-persona-icon-url [URL]` to set the icon the bot will use in this script.\n'+
     '* Use `/list-personas` list known personas.\n'+
     '* Use `/load-persona [persona name]` to switch between scripts\n'+
+    '* :new: Use `/pin-personas` to pin the current persona to a channel'+
+    '* :new: Use `/unpin-persona` to unpin a persona in a channel (defaults back to current)'+
+    '* :new: Say `hello` to the bot to get the bot name'+
     '* Use `/learn [you say] \\n [bot say]` to teach the bot new tricks, see _Training  your bot_ for more details.\n'+
         '* Run the script by just saying your part of the script the let the bot follow\n'+
         '\n*Training  your bot*\n'+
