@@ -206,10 +206,20 @@ controller.on('slash_command', function (bot, message) {
                 }
             })
 
-    }else{
-            bot.replyPublic(message, "");
+    }else if (message.command == '/unpin-persona'){
+            var channel = message.channel;
+            controller.storage.teams.get(team_id+"_pin_/", function(err, val) {
+                if(val != null){
+                    console.log('pins  ', val);
+                }else{
+                    bot.replyPrivate(message, 'Cloud not unpin' );
+                }
+            })
 
-        }
+    }else{
+        bot.replyPublic(message, "");
+
+    }
     });
 
 
