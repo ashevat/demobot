@@ -203,6 +203,8 @@ controller.on('slash_command', function (bot, message) {
                             }else{
                                 persona_id = pinned_persona_id;
                             }
+                            console.log('persona_in VAL -',persona_id );
+                            console.log('pinned persona_in VAL -',pinned_persona_id );
                             controller.storage.teams.get(persona_id, function(err, val1) {
                                 if(val1 != null){
                                     val1.persona_icon = new_persona_icon_url;
