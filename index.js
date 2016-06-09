@@ -30,7 +30,7 @@ function cleanKey(key) {
 controller.on('slash_command', function (bot, message) {
     console.log('Here is the actual slash command used: ', message.command);
     var team_id  = message.team_id;
-    loadPersonality(team_id, function () {
+    loadPersonality(team_id, message.channel, function () {
 
         if(message.command == '/learn'){
             var learn = message.text
@@ -194,13 +194,15 @@ controller.on('slash_command', function (bot, message) {
 
             controller.storage.teams.get(team_id+"_"+'current_persona', function(err, val) {
                 if(val != null){
-                    persona = val.data
+                    var persona_id = val.id
                     console.log('Saving persona, channel: ', "["+persona+"],["+channel+"]" );
-                    save_id = team_id+"_pin/"+channel;
-                    pin_persona = {id:save_id, value:persona};
+                    save_id = team_id+"_pin_/"+channel;
+                    pin_persona = {id:save_id, value:persona_id};
                     controller.storage.teams.save(pin_persona);
-                    bot.replyPublic(message, 'Saving persona, channel: ', "["+persona+"],["+channel+"]" );
+                    bot.replyPublic(message, 'Saving persona: '+persona+', channel: '+channel );
 
+                }else{
+                    bot.replyPublic(message, 'Cloud not pin empty persona' );
                 }
             })
 
@@ -254,7 +256,7 @@ controller.hears(['^help$'], ['direct_message', 'direct_mention'], function (bot
 controller.hears('.*', ['direct_message', 'direct_mention', 'ambient'], function (bot, message) {
     console.log('msg - ', message);
     var team_id = message.team;
-    loadPersonality(team_id, function () {
+    loadPersonality(team_id, message.channel, function () {
         man_say = cleanKey(message.text);
         loading  = persona.id+'_voc/_'+man_say;
         console.log('Loading key: ', "["+loading+"]");
@@ -294,25 +296,44 @@ function compose(text, attachments){
 
 }
 
-function loadPersonality(team_id, callback) {
+function loadPersonality(team_id, channel, callback) {
     console.log('loadPersonality ');
-    controller.storage.teams.get(team_id+"_"+'current_persona', function(err, val) {
+    controller.storage.teams.get(team_id+"_pin_/"+channel, function(err, val) {
         if(val != null){
-            persona = val.data
-            console.log('calling callback', val.data);
-            callback();
+            persona_id  = val.data
+            console.log('Pinned persona', val.data);
+            controller.storage.teams.get(persona_id, function(err, value) {
+                if(val != null){
+                    persona = value.data
+                    console.log('Pinned calling callback', val.data);
+                    callback();
+                }else{
+                    console.log('Pinned persona load fail');
+                }
+            })
+
         }else{
-            save_id = team_id+"_default"
-            new_persona = {id:save_id, persona_name:'Demo Bot', persona_icon: 'http://lorempixel.com/48/48'};
-            controller.storage.teams.save(new_persona);
-            var current_persona = {id: team_id+"_"+'current_persona', data: new_persona};
-            controller.storage.teams.save(current_persona);
-            persona = current_persona.data;
-            personas = {id: team_id+"_personas", data: ["default"]};
-            controller.storage.teams.save(personas);
-            callback();
+            controller.storage.teams.get(team_id+"_"+'current_persona', function(err, val) {
+                if(val != null){
+                    persona = val.data
+                    console.log('calling callback', val.data);
+                    callback();
+                }else{
+                    save_id = team_id+"_default"
+                    new_persona = {id:save_id, persona_name:'Demo Bot', persona_icon: 'http://lorempixel.com/48/48'};
+                    controller.storage.teams.save(new_persona);
+                    var current_persona = {id: team_id+"_"+'current_persona', data: new_persona};
+                    controller.storage.teams.save(current_persona);
+                    persona = current_persona.data;
+                    personas = {id: team_id+"_personas", data: ["default"]};
+                    controller.storage.teams.save(personas);
+                    callback();
+                }
+            });
         }
-    });
+
+    })
+
 }
 
 
