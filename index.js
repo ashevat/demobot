@@ -30,6 +30,7 @@ function cleanKey(key) {
 controller.on('slash_command', function (bot, message) {
     console.log('Here is the actual slash command used: ', message.command);
     var team_id  = message.team_id;
+    var channel = message.channel;
     loadPersonality(team_id, message.channel, function () {
 
         if(message.command == '/learn'){
@@ -206,7 +207,6 @@ controller.on('slash_command', function (bot, message) {
             bot.replyPublic(message, "");
 
         }else if (message.command == '/pin-persona'){
-            var channel = message.channel;
 
             controller.storage.teams.get(team_id+"_"+'current_persona', function(err, val) {
                 if(val != null){
@@ -223,7 +223,6 @@ controller.on('slash_command', function (bot, message) {
             })
 
     }else if (message.command == '/unpin-persona'){
-            var channel = message.channel;
             save_id = team_id+"_pin_/"+channel;
             pin_persona = {id:save_id, value:null};
             controller.storage.teams.save(pin_persona);
