@@ -211,6 +211,7 @@ controller.on('slash_command', function (bot, message) {
             save_id = team_id+"_pin_/"+channel;
             pin_persona = {id:save_id, value:null};
             controller.storage.teams.save(pin_persona);
+            bot.replyPrivate(message, 'Unpinned '+channel );
             /*controller.storage.teams.get(team_id+"_pin_/", function(err, val) {
                 if(val != null){
                     console.log('pins  ', val);
