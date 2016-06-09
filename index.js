@@ -199,10 +199,10 @@ controller.on('slash_command', function (bot, message) {
                     save_id = team_id+"_pin_/"+channel;
                     pin_persona = {id:save_id, value:persona_id};
                     controller.storage.teams.save(pin_persona);
-                    bot.replyPublic(message, 'Saving persona: '+persona_id+', channel: '+channel );
+                    bot.replyPrivate(message, 'Saving persona: '+persona_id+', channel: '+channel );
 
                 }else{
-                    bot.replyPublic(message, 'Cloud not pin empty persona' );
+                    bot.replyPrivate(message, 'Cloud not pin empty persona' );
                 }
             })
 
@@ -246,6 +246,12 @@ controller.on('bot_channel_join', function (bot, message) {
 //})
 
 
+controller.hears(['^hello$'], ['direct_message', 'direct_mention'], function (bot, message) {
+    loadPersonality(message.team, message.channel, function () {
+        bot.reply(message, ":wave: I am "+persona.persona_name)
+    })
+
+})
 
 
 controller.hears(['^help$'], ['direct_message', 'direct_mention'], function (bot, message) {
