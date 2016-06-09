@@ -212,6 +212,7 @@ controller.on('slash_command', function (bot, message) {
                 if(val != null){
                     console.log('pins  ', val);
                     delete val[channel];
+                    pin_persona = {id:team_id+"_pin_/", value:val};
                     console.log('pins after delete ', val);
                     controller.storage.teams.save(val)
                     bot.replyPrivate(message, 'Unpinned '+channel );
