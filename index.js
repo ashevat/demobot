@@ -323,7 +323,7 @@ function compose(text, attachments){
 function loadPersonality(team_id, channel, callback) {
     console.log('try to loadPersonality: '+team_id+"_pin_/"+channel);
     controller.storage.teams.get(team_id+"_pin_/"+channel, function(err, val) {
-        if(val != null){
+        if(val != null && val.value != undefined){
             persona_id  = val.value
             console.log('Pinned persona', val.value);
             controller.storage.teams.get(persona_id, function(err, value) {
