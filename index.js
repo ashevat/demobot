@@ -208,18 +208,20 @@ controller.on('slash_command', function (bot, message) {
 
     }else if (message.command == '/unpin-persona'){
             var channel = message.channel;
-            controller.storage.teams.get(team_id+"_pin_/", function(err, val) {
+            save_id = team_id+"_pin_/"+channel;
+            pin_persona = {id:save_id, value:null};
+            controller.storage.teams.save(pin_persona);
+            /*controller.storage.teams.get(team_id+"_pin_/", function(err, val) {
                 if(val != null){
                     console.log('pins  ', val);
                     delete val[channel];
-                    pin_personas = {id:team_id+"_pin_/", value:val};
                     console.log('pins after delete ', val);
-                    controller.storage.teams.save(pin_personas)
+                    controller.storage.teams.save(val)
                     bot.replyPrivate(message, 'Unpinned '+channel );
                 }else{
                     bot.replyPrivate(message, 'Cloud not unpin' );
                 }
-            })
+            })*/
 
     }else{
         bot.replyPublic(message, "");
