@@ -211,6 +211,9 @@ controller.on('slash_command', function (bot, message) {
             controller.storage.teams.get(team_id+"_pin_/", function(err, val) {
                 if(val != null){
                     console.log('pins  ', val);
+                    delete val[channel];
+                    controller.storage.teams.save(val)
+                    bot.replyPrivate(message, 'Unpinned' );
                 }else{
                     bot.replyPrivate(message, 'Cloud not unpin' );
                 }
