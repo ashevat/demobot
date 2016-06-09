@@ -189,7 +189,22 @@ controller.on('slash_command', function (bot, message) {
 
             bot.replyPublic(message, "");
 
-        }else{
+        }else if (message.command == '/pin-persona'){
+            var channel = message.channel;
+
+            controller.storage.teams.get(team_id+"_"+'current_persona', function(err, val) {
+                if(val != null){
+                    persona = val.data
+                    console.log('Saving persona, channel: ', "["+persona+"],["+channel+"]" );
+                    save_id = team_id+"_pin/"+channel;
+                    pin_persona = {id:save_id, value:persona};
+                    controller.storage.teams.save(pin_persona);
+                    bot.replyPublic(message, 'Saving persona, channel: ', "["+persona+"],["+channel+"]" );
+
+                }
+            })
+
+    }else{
             bot.replyPublic(message, "");
 
         }
@@ -316,7 +331,7 @@ var helpText = ' *What is the Demo Bot* \n'+
 '> The bot can learn to reply to any text you send, either in DM or in channel in which the bot was invited to.\n'+
 '\n*Working with your bot*\n'+
 '* Add the bot to your team and invite it to the appropriate channels (https://beepboophq.com/bots/1d563b4601d44aeca2bda92547894460).\n'+
-'* Use `/add-persona [persona name]` to start a new script (this will automatically switch to the newly created persona)\n'+
+'* Use `/new-persona [persona name]` to start a new script (this will automatically switch to the newly created persona)\n'+
 '* Use `/set-persona-name [display name]` to set the name the bot will use to display in this script\n'+
 '* Use `/set-persona-icon-url [URL]` to set the icon the bot will use in this script.\n'+
     '* Use `/list-personas` list known personas.\n'+
