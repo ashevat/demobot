@@ -443,9 +443,9 @@ var helpText = ' *What is the Demo Bot* \n'+
 '* Use `/set-persona-icon-url [URL]` to set the icon the bot will use in this script.\n'+
     '* Use `/list-personas` list known personas.\n'+
     '* Use `/load-persona [persona name]` to switch between scripts\n'+
-    '* :new: Use `/pin-personas` to pin the current persona to a channel'+
-    '* :new: Use `/unpin-persona` to unpin a persona in a channel (defaults back to current)'+
-    '* :new: Say `hello` to the bot to get the bot name'+
+    '* :new: Use `/pin-personas` to pin the current persona to a channel\n'+
+    '* :new: Use `/unpin-persona` to unpin a persona in a channel (defaults back to current)\n'+
+    '* :new: Say `hello` to the bot to get the bot name\n'+
     '* Use `/learn [you say] \\n [bot say]` to teach the bot new tricks, see _Training  your bot_ for more details.\n'+
         '* Run the script by just saying your part of the script the let the bot follow\n'+
         '\n*Training  your bot*\n'+
