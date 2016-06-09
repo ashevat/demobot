@@ -301,11 +301,11 @@ function loadPersonality(team_id, channel, callback) {
     controller.storage.teams.get(team_id+"_pin_/"+channel, function(err, val) {
         if(val != null){
             persona_id  = val.value
-            console.log('Pinned persona', val.data);
+            console.log('Pinned persona', val.value);
             controller.storage.teams.get(persona_id, function(err, value) {
                 if(value != null){
-                    persona = value.data
-                    console.log('Pinned calling callback', value.data);
+                    persona = value
+                    console.log('Pinned calling callback', value);
                     callback();
                 }else{
                     console.log('Pinned persona load fail');
