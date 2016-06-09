@@ -194,12 +194,12 @@ controller.on('slash_command', function (bot, message) {
 
             controller.storage.teams.get(team_id+"_"+'current_persona', function(err, val) {
                 if(val != null){
-                    var persona_id = val.id
+                    var persona_id = val.data.id
                     console.log('Saving persona, channel: ', "["+persona+"],["+channel+"]" );
                     save_id = team_id+"_pin_/"+channel;
                     pin_persona = {id:save_id, value:persona_id};
                     controller.storage.teams.save(pin_persona);
-                    bot.replyPublic(message, 'Saving persona: '+persona+', channel: '+channel );
+                    bot.replyPublic(message, 'Saving persona: '+persona_id+', channel: '+channel );
 
                 }else{
                     bot.replyPublic(message, 'Cloud not pin empty persona' );
