@@ -264,7 +264,7 @@ controller.on('bot_channel_join', function (bot, message) {
 //})
 
 
-controller.hears(['^hello bot$'], ['direct_message', 'direct_mention', "ambient"], function (bot, message) {
+controller.hears(['^hello doc$'], ['direct_message', 'direct_mention', "ambient"], function (bot, message) {
     loadPersonality(message.team, message.channel, function () {
         bot.reply(message, ":wave: I am "+persona.persona_name)
     })
