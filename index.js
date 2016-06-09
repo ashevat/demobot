@@ -192,6 +192,7 @@ controller.on('slash_command', function (bot, message) {
                 var pinned_persona_id = null;
                 var persona_id = null;
                 if (val != null && val.value != undefined) {
+                    pinned_persona_id = val.value;
                     // we have a pinned persona
                     controller.storage.teams.get(team_id+"_"+'current_persona', function(err, val) {
                         if(val != null){
