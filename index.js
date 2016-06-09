@@ -117,6 +117,8 @@ controller.on('slash_command', function (bot, message) {
                 if (val != null && val.value != undefined) {
                     pinned_persona_id = val.value;
                 }
+                bot.replyPrivate(message, 'pinned_persona_id '+pinned_persona_id);
+
                 controller.storage.teams.get(team_id+"_"+'current_persona', function(err, val) {
                     if(val != null){
                         persona = val.data
@@ -279,7 +281,7 @@ controller.on('bot_channel_join', function (bot, message) {
 //})
 
 
-controller.hears(['^hello doc$'], ['direct_message', 'direct_mention', "ambient"], function (bot, message) {
+controller.hears(['^hello$'], ['direct_message', 'direct_mention', "ambient"], function (bot, message) {
     loadPersonality(message.team, message.channel, function () {
         bot.reply(message, compose( ":wave: I am "+persona.persona_name))
     })
