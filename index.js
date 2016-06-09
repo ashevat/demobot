@@ -116,29 +116,48 @@ controller.on('slash_command', function (bot, message) {
                 var persona_id = null;
                 if (val != null && val.value != undefined) {
                     pinned_persona_id = val.value;
-                }
-                bot.replyPrivate(message, 'pinned_persona_id '+pinned_persona_id);
+                    //We have a pinned persona
+                    controller.storage.teams.get(team_id+"_"+'current_persona', function(err, val) {
+                        if(val != null){
+                            persona = val.data
+                            persona_id = val.data.id;
+                            if(persona_id == pinned_persona_id){
+                                val.data.persona_name = new_persona_name;
+                                controller.storage.teams.save(val);
+                            }else{
+                                persona_id = pinned_persona_id;
+                            }
+                            controller.storage.teams.get(persona_id, function(err, val1) {
+                                if(val1 != null){
+                                    val1.persona_name = new_persona_name;
+                                    controller.storage.teams.save(val1);
+                                    bot.replyPrivate(message, 'From now on I shall be called Sir '+new_persona_name);
 
-                controller.storage.teams.get(team_id+"_"+'current_persona', function(err, val) {
-                    if(val != null){
-                        persona = val.data
-                        persona_id = val.data.id;
-                        if(persona_id == pinned_persona_id){
+                                }
+                            });
+                        }
+                    });
+
+                }else{
+                    // no pinned persona
+                    controller.storage.teams.get(team_id+"_"+'current_persona', function(err, val) {
+                        if(val != null){
+                            persona = val.data
+                            persona_id = val.data.id;
                             val.data.persona_name = new_persona_name;
                             controller.storage.teams.save(val);
-                        }else{
-                            persona_id = pinned_persona_id;
-                        }
-                        controller.storage.teams.get(persona_id, function(err, val1) {
-                            if(val1 != null){
-                                val1.persona_name = new_persona_name;
-                                controller.storage.teams.save(val1);
-                                //bot.replyPrivate(message, 'From now on I shall be called Sir '+new_persona_name);
+                            controller.storage.teams.get(persona_id, function(err, val1) {
+                                if(val1 != null){
+                                    val1.persona_name = new_persona_name;
+                                    controller.storage.teams.save(val1);
+                                    bot.replyPrivate(message, 'From now on I shall be called Sir '+new_persona_name);
 
-                            }
-                        });
-                    }
-                });
+                                }
+                            });
+                        }
+                    });
+
+                }
 
             })
 
@@ -229,17 +248,7 @@ controller.on('slash_command', function (bot, message) {
             pin_persona = {id:save_id, value:null};
             controller.storage.teams.save(pin_persona);
             bot.replyPrivate(message, 'Unpinned '+channel );
-            /*controller.storage.teams.get(team_id+"_pin_/", function(err, val) {
-                if(val != null){
-                    console.log('pins  ', val);
-                    delete val[channel];
-                    console.log('pins after delete ', val);
-                    controller.storage.teams.save(val)
-                    bot.replyPrivate(message, 'Unpinned '+channel );
-                }else{
-                    bot.replyPrivate(message, 'Cloud not unpin' );
-                }
-            })*/
+
 
     }else{
         bot.replyPublic(message, "");
