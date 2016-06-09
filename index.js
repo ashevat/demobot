@@ -187,22 +187,54 @@ controller.on('slash_command', function (bot, message) {
             bot.replyPrivate(message, 'coming soon!');
         }else if (message.command == '/set-persona-icon-url'){
             var new_persona_icon_url = message.text.trim();
-            controller.storage.teams.get(team_id+"_"+'current_persona', function(err, val) {
-                if(val != null){
-                    persona = val.data
-                    val.data.persona_icon = new_persona_icon_url;
-                    controller.storage.teams.save(val);
-                    persona_id = val.data.id;
-                    controller.storage.teams.get(persona_id, function(err, val1) {
-                        if(val1 != null){
-                            val1.persona_icon = new_persona_icon_url;
-                            controller.storage.teams.save(val1);
-                            bot.replyPrivate(message, 'From now on I shall use a new icon - '+new_persona_icon_url);
+            // check if pinned persona
+            controller.storage.teams.get(team_id+"_pin_/"+channel, function(err, val) {
+                var pinned_persona_id = null;
+                var persona_id = null;
+                if (val != null && val.value != undefined) {
+                    // we have a pinned persona
+                    controller.storage.teams.get(team_id+"_"+'current_persona', function(err, val) {
+                        if(val != null){
+                            persona = val.data
+                            persona_id = val.data.id;
+                            if(persona_id == pinned_persona_id){
+                                val.data.persona_icon = new_persona_icon_url;
+                                controller.storage.teams.save(val);
+                            }else{
+                                persona_id = pinned_persona_id;
+                            }
+                            controller.storage.teams.get(persona_id, function(err, val1) {
+                                if(val1 != null){
+                                    val1.persona_icon = new_persona_icon_url;
+                                    controller.storage.teams.save(val1);
+                                    bot.replyPrivate(message, 'From now on I shall be called Sir '+new_persona_name);
 
+                                }
+                            });
+                        }
+                    });
+                }else{
+                    // no pinned persona
+                    controller.storage.teams.get(team_id+"_"+'current_persona', function(err, val) {
+                        if(val != null){
+                            persona = val.data
+                            val.data.persona_icon = new_persona_icon_url;
+                            controller.storage.teams.save(val);
+                            persona_id = val.data.id;
+                            controller.storage.teams.get(persona_id, function(err, val1) {
+                                if(val1 != null){
+                                    val1.persona_icon = new_persona_icon_url;
+                                    controller.storage.teams.save(val1);
+                                    bot.replyPrivate(message, 'From now on I shall use a new icon - '+new_persona_icon_url);
+
+                                }
+                            });
                         }
                     });
                 }
-            });
+            })
+
+
 
         }else if (message.command == '/demo-setting'){
             var setting = message.text.trim();
