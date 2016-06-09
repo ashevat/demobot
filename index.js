@@ -297,15 +297,15 @@ function compose(text, attachments){
 }
 
 function loadPersonality(team_id, channel, callback) {
-    console.log('loadPersonality ');
+    console.log('try to loadPersonality: '+team_id+"_pin_/"+channel);
     controller.storage.teams.get(team_id+"_pin_/"+channel, function(err, val) {
         if(val != null){
             persona_id  = val.value
             console.log('Pinned persona', val.data);
             controller.storage.teams.get(persona_id, function(err, value) {
-                if(val != null){
+                if(value != null){
                     persona = value.data
-                    console.log('Pinned calling callback', val.data);
+                    console.log('Pinned calling callback', value.data);
                     callback();
                 }else{
                     console.log('Pinned persona load fail');
@@ -313,6 +313,7 @@ function loadPersonality(team_id, channel, callback) {
             })
 
         }else{
+            console.log('loadPersonality current');
             controller.storage.teams.get(team_id+"_"+'current_persona', function(err, val) {
                 if(val != null){
                     persona = val.data
