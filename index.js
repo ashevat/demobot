@@ -108,22 +108,38 @@ controller.on('slash_command', function (bot, message) {
 
         }else if (message.command == '/set-persona-name'){
             var new_persona_name = message.text.trim();
-            controller.storage.teams.get(team_id+"_"+'current_persona', function(err, val) {
-                if(val != null){
-                    persona = val.data
-                    val.data.persona_name = new_persona_name;
-                    controller.storage.teams.save(val);
-                    persona_id = val.data.id;
-                    controller.storage.teams.get(persona_id, function(err, val1) {
-                        if(val1 != null){
-                            val1.persona_name = new_persona_name;
-                            controller.storage.teams.save(val1);
-                            bot.replyPrivate(message, 'From now on I shall be called Sir '+new_persona_name);
 
-                        }
-                    });
+            // check if pinned persona
+            controller.storage.teams.get(team_id+"_pin_/"+channel, function(err, val) {
+                var pinned_persona_id = null;
+                var persona_id = null;
+                if (val != null && val.value != undefined) {
+                    pinned_persona_id = val.value;
                 }
-            });
+                controller.storage.teams.get(team_id+"_"+'current_persona', function(err, val) {
+                    if(val != null){
+                        persona = val.data
+                        persona_id = val.data.id;
+                        if(persona_id == pinned_persona_id){
+                            val.data.persona_name = new_persona_name;
+                            controller.storage.teams.save(val);
+                        }else{
+                            persona_id = pinned_persona_id;
+                        }
+                        controller.storage.teams.get(persona_id, function(err, val1) {
+                            if(val1 != null){
+                                val1.persona_name = new_persona_name;
+                                controller.storage.teams.save(val1);
+                                bot.replyPrivate(message, 'From now on I shall be called Sir '+new_persona_name);
+
+                            }
+                        });
+                    }
+                });
+
+            })
+
+
 
         }else if (message.command == '/list-personas'){
             controller.storage.teams.get(team_id+"_personas", function(err, val) {
