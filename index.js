@@ -300,7 +300,7 @@ function loadPersonality(team_id, channel, callback) {
     console.log('loadPersonality ');
     controller.storage.teams.get(team_id+"_pin_/"+channel, function(err, val) {
         if(val != null){
-            persona_id  = val.data
+            persona_id  = val.value
             console.log('Pinned persona', val.data);
             controller.storage.teams.get(persona_id, function(err, value) {
                 if(val != null){
