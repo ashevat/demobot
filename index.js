@@ -150,7 +150,7 @@ controller.on('slash_command', function (bot, message) {
                                 if(val1 != null){
                                     val1.persona_name = new_persona_name;
                                     controller.storage.teams.save(val1);
-                                    bot.replyPrivate(message, 'From now on I shall be called Sir '+new_persona_name);
+                                    bot.replyPrivate(message, 'From now on I shall be called Dr. '+new_persona_name);
 
                                 }
                             });
