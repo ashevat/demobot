@@ -338,20 +338,32 @@ controller.hears(['^help$'], ['direct_message', 'direct_mention'], function (bot
 })
 
 controller.hears(['^export yourself$'], ['direct_message', 'direct_mention'], function (bot, message) {
-    call_config = { filename: "persona_export.txt" , content: "hello world", filetype: 'text', channels: message.channel}
-    bot.api.files.upload(call_config, function(err,res) {
+    var team_id = message.team;
+    loadPersonality(team_id, message.channel, function () {
+        loading  = persona.id+'_voc/';
+        console.log('Loading vocabulary: ');
 
-        if (err) {
-            bot.reply(message, 'can not export!');
-            console.log(err, bot)
-            return;
-        }
+        controller.storage.teams.get(loading, function(err, val) {
+            console.log("got value" , val)
+            call_config = { filename: "persona_export.txt" , content: JSON.stringify(val), filetype: 'text', channels: message.channel}
+            bot.api.files.upload(call_config, function(err,res) {
+
+                if (err) {
+                    bot.reply(message, 'can not export!');
+                    console.log(err, bot)
+                    return;
+                }
+            });
+
+        });
+
     });
+
 })
 
 
 controller.hears('.*', ['direct_message', 'direct_mention', 'ambient'], function (bot, message) {
-    console.log('msg - ', message);
+    //console.log('msg - ', message);
     var team_id = message.team;
     loadPersonality(team_id, message.channel, function () {
         man_say = cleanKey(message.text);
