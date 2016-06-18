@@ -337,6 +337,18 @@ controller.hears(['^help$'], ['direct_message', 'direct_mention'], function (bot
     bot.reply(message, helpText)
 })
 
+controller.hears(['^export yourself$'], ['direct_message', 'direct_mention'], function (bot, message) {
+    call_config = { filename: "persona_export.txt" , content: "hello world", filetype: 'text', channels: message.channel}
+    bot.api.files.upload(call_config, function(err,res) {
+
+        if (err) {
+            bot.reply(message, 'can not export!');
+            console.log(err, bot)
+            return;
+        }
+    });
+})
+
 
 controller.hears('.*', ['direct_message', 'direct_mention', 'ambient'], function (bot, message) {
     console.log('msg - ', message);
