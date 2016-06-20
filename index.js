@@ -50,7 +50,7 @@ controller.on('slash_command', function (bot, message) {
                 var count = 0;
                 for (var key in learnings) {
                     if (learnings.hasOwnProperty(key)) {
-                        learning = p[key];
+                        learning = learnings[key];
                         learning['id'] = persona.id+'_voc/'+key;
                         controller.storage.teams.save(learning);
                         count++;
