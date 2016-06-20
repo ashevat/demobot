@@ -43,22 +43,39 @@ controller.on('slash_command', function (bot, message) {
                 bot.replyPrivate(message, 'missing param - you say is ('+man_say+') I say is ('+bot_say+') ');
                 return;
             }
-            var  attachments = null;
-            if(bot_say.indexOf('"attachments')>0){
-                p_data = JSON.parse(bot_say);
-                attachments = p_data["attachments"];
-                bot_say  = "";
-            }
-            saving  = persona.id+'_voc/_'+man_say;
-            console.log('Saving key, value: ', "["+saving+"],["+bot_say+"}", attachments );
-            if(attachments != null){
-                var learning = {id: saving, botsay: bot_say, attachments: attachments};
-                controller.storage.teams.save(learning);
-                bot.replyPrivate(message, 'When you say: '+man_say+' \n I will say: '+p_data)
-            }else{
-                var learning = {id: saving, botsay: bot_say};
-                controller.storage.teams.save(learning);
-                bot.replyPrivate(message, 'When you say: '+man_say+' \n I will say: '+bot_say)
+
+            if(man_say == "import"){
+                // handle import
+                learnings  = JSON.parse(bot_say);
+                var count = 0;
+                for (var key in learnings) {
+                    if (learnings.hasOwnProperty(key)) {
+                        learning = p[key];
+                        learning['id'] = persona.id+'_voc/'+key;
+                        controller.storage.teams.save(learning);
+                        count++;
+                    }
+                }
+                bot.replyPrivate(message, 'Imported '+count+' items')
+
+            }else {
+                var  attachments = null;
+                if(bot_say.indexOf('"attachments')>0){
+                    p_data = JSON.parse(bot_say);
+                    attachments = p_data["attachments"];
+                    bot_say  = "";
+                }
+                saving  = persona.id+'_voc/_'+man_say;
+                console.log('Saving key, value: ', "["+saving+"],["+bot_say+"}", attachments );
+                if(attachments != null){
+                    var learning = {id: saving, botsay: bot_say, attachments: attachments};
+                    controller.storage.teams.save(learning);
+                    bot.replyPrivate(message, 'When you say: '+man_say+' \n I will say: '+p_data)
+                }else{
+                    var learning = {id: saving, botsay: bot_say};
+                    controller.storage.teams.save(learning);
+                    bot.replyPrivate(message, 'When you say: '+man_say+' \n I will say: '+bot_say)
+                }
             }
 
         }else if(message.command == '/new-persona'){
