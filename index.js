@@ -363,7 +363,7 @@ controller.hears(['^export yourself$'], ['direct_message', 'direct_mention'], fu
 
         controller.storage.teams.get(loading, function(err, val) {
             console.log("got value" , val)
-            call_config = { filename: "persona_export.txt" , content: JSON.stringify(val), filetype: 'text', channels: message.channel}
+            call_config = { filename: "persona_export_"+persona.persona_name+".txt" , content: JSON.stringify(val), filetype: 'text', channels: message.channel}
             bot.api.files.upload(call_config, function(err,res) {
 
                 if (err) {
