@@ -37,10 +37,11 @@ controller.on('slash_command', function (bot, message) {
             var learn = message.text
             var man_say = learn.substr(0, learn.indexOf("\n")-1);
             var bot_say = learn.substr(learn.indexOf("\n")+1);
+            var orig_man_say = man_say;
             man_say = cleanKey(man_say);
             bot_say = bot_say.trim();
             if(man_say == "" || bot_say == ""){
-                bot.replyPrivate(message, 'missing param - you say is ('+man_say+') I say is ('+bot_say+') ');
+                bot.replyPrivate(message, 'missing param - you say is ('+orig_man_say+') I say is ('+bot_say+') ');
                 return;
             }
 
@@ -68,13 +69,13 @@ controller.on('slash_command', function (bot, message) {
                 saving  = persona.id+'_voc/_'+man_say;
                 console.log('Saving key, value: ', "["+saving+"],["+bot_say+"}", attachments );
                 if(attachments != null){
-                    var learning = {id: saving, botsay: bot_say, attachments: attachments};
+                    var learning = {id: saving, humansay: orig_man_say, botsay: bot_say, attachments: attachments};
                     controller.storage.teams.save(learning);
-                    bot.replyPrivate(message, 'When you say: '+man_say+' \n I will say: '+p_data)
+                    bot.replyPrivate(message, 'When you say: '+orig_man_say+' \n I will say: '+p_data)
                 }else{
-                    var learning = {id: saving, botsay: bot_say};
+                    var learning = {id: saving,  humansay: orig_man_say, botsay: bot_say};
                     controller.storage.teams.save(learning);
-                    bot.replyPrivate(message, 'When you say: '+man_say+' \n I will say: '+bot_say)
+                    bot.replyPrivate(message, 'When you say: '+orig_man_say+' \n I will say: '+bot_say)
                 }
             }
 
