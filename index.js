@@ -62,9 +62,18 @@ controller.on('slash_command', function (bot, message) {
             }else {
                 var  attachments = null;
                 if(bot_say.indexOf('"attachments')>0){
+                    try {
                     p_data = JSON.parse(bot_say);
+                    } catch(err) {
+                        bot.replyPrivate(message, ':sick: Could not digest your JSON. Please test at https://api.slack.com/docs/messages/builder');
+                        return;
+                    }
                     attachments = p_data["attachments"];
-                    bot_say  = "";
+                    if(p_data["text"]!=null && p_data["text"]!=''){
+                        bot_say =  p_data["text"];
+                    }else{
+                        bot_say  = "";
+                    }
                 }
                 saving  = persona.id+'_voc/_'+man_say;
                 console.log('Saving key, value: ', "["+saving+"],["+bot_say+"}", attachments );
