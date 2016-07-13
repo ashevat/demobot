@@ -65,7 +65,7 @@ controller.on('slash_command', function (bot, message) {
                     try {
                     p_data = JSON.parse(bot_say);
                     } catch(err) {
-                        bot.replyPrivate(message, ':sick: Could not digest your JSON. Please test at https://api.slack.com/docs/messages/builder');
+                        bot.replyPrivate(message, 'Could not digest your JSON. Please test at https://api.slack.com/docs/messages/builder');
                         return;
                     }
                     attachments = p_data["attachments"];
