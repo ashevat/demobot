@@ -24,7 +24,7 @@ controller.setupWebserver(process.env.PORT,function(err,webserver) {
 
 function cleanKey(key) {
     // strings and can't contain ".", "#", "$", "/", "[", or "]"
-    return key.toLowerCase().replace(".","").replace("?","").replace("$","").replace("/","").replace("[","").replace("]","").replace("#","").trim()
+    return key.toLowerCase().replace(/\./g, "").replace(/\?/g,"").replace(/\$/g,"").replace(/\//g,"").replace(/\[/g,"").replace(/\]/g,"").replace(/\#/g,"").trim();
 }
 
 controller.on('slash_command', function (bot, message) {
@@ -41,7 +41,7 @@ controller.on('slash_command', function (bot, message) {
             man_say = cleanKey(man_say);
             bot_say = bot_say.trim();
             if(man_say == "" || bot_say == ""){
-                bot.replyPrivate(message, 'missing param - you say is ('+orig_man_say+') I say is ('+bot_say+') ');
+                bot.replyPrivate(message, 'missing param - you say is ('+orig_man_say+') I say is ('+bot_say+') - please use `/learn [you say] \\n [bot say]` to teach the bot new tricks (Use shift+enter for new lines)');
                 return;
             }
 
