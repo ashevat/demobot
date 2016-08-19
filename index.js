@@ -363,7 +363,7 @@ controller.on('interactive_message_callback', function(bot, message) {
             if(val == undefined){
                 console.log('what should I say when you say "'+man_say+'"');
                 if(message.event != "ambient"){
-                    bot.replyInteractive(message, compose('what should I say when you say "'+man_say+'"? not sure... \n Please use /learn to teach me new tricks!', [] ));
+                    bot.replyInteractive(message, compose('what should I say when you say "'+man_say+'"? not sure... \n Please use \'/learn '+loading+'\' to teach me new tricks!', [] ));
                 }
             }else{
                 resp = val["botsay"].toString();
