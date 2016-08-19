@@ -342,7 +342,7 @@ beepboop.on('botkit.rtm.started', function (bot, resource, meta) {
 
 
 controller.on('bot_channel_join', function (bot, message) {
-    bot.reply(message, ":wave: team -  I am your demo bot. \n I support direct mentions and DMs, I will read what is in this channel and try to respond accordingly -  you can also `@demobot: help` me.")
+    bot.replyPrivate(message, ":wave: team -  I am your demo bot. \n I support direct mentions and DMs, I will read what is in this channel and try to respond accordingly -  you can also `@demobot: help` me.")
 })
 
 
