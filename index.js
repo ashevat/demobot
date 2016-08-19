@@ -349,9 +349,10 @@ controller.hears('interactive', 'direct_message', function(bot, message) {
 controller.on('interactive_message_callback', function(bot, message) {
 
     // check message.actions and message.callback_id to see what action to take...
-    console.log("got actions" , message.actions)
+    console.log("got actions" , message.actions);
     var team_id = message.team;
-
+    console.log("got team" , team_id);
+    /*
     loadPersonality(team_id, message.channel, function () {
         man_say = cleanKey(message.text);
         loading  = persona.id+'_voc/_clicked_'+message.callback_id+"_"+[0]["value"];
@@ -375,7 +376,7 @@ controller.on('interactive_message_callback', function(bot, message) {
         });
 
     });
-
+    */
     //bot.replyInteractive(message, "got message id"+message.callback_id+" and actions "+message.actions);
 
 
