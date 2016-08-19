@@ -26,7 +26,7 @@ function cleanKey(key) {
     // strings and can't contain ".", "#", "$", "/", "[", or "]"
     return key.toLowerCase().replace(/\./g, "").replace(/\?/g,"").replace(/\$/g,"").replace(/\//g,"").replace(/\[/g,"").replace(/\]/g,"").replace(/\#/g,"").trim();
 }
-
+/*
 controller.on('slash_command', function (bot, message) {
     console.log('Here is the actual slash command used: ', message.command);
     var team_id  = message.team_id;
@@ -200,16 +200,7 @@ controller.on('slash_command', function (bot, message) {
             });
 
         }else if (message.command == '/export-persona'){
-            /*call_config = { filename: "persona_export.txt" , content: "hello world", filetype: 'text', channels: message.channel}
-            bot.api.files.upload(call_config, function(err,res) {
 
-                if (err) {
-                    bot.replyPrivate(message, 'can not export!');
-                    console.log(err, bot)
-                    return;
-                }
-            });
-            */
 
             bot.replyPrivate(message, 'coming soon!');
         }else if (message.command == '/set-persona-icon-url'){
@@ -320,23 +311,9 @@ controller.on('slash_command', function (bot, message) {
 
 
 });
-
-/*
-beepboop.on('botkit.rtm.started', function (bot, resource, meta) {
-    var slackUserId = resource.SlackUserID
-
-    if (meta.isNew && slackUserId) {
-        bot.api.im.open({ user: slackUserId }, function (err, response) {
-            if (err) {
-                return console.log(err)
-            }
-            var dmChannel = response.channel.id
-            bot.say({channel: dmChannel, text: 'Thanks for adding me to your team!'})
-            bot.say({channel: dmChannel, text: 'You can now /invite me to a channel, so that I can be of use to the team, or DM/@wordsbot me anytime!'})
-        })
-    }
-})
 */
+
+
 
 
 
@@ -421,7 +398,7 @@ controller.hears(['^export yourself$'], ['direct_message', 'direct_mention'], fu
 
 })
 
-
+/*
 controller.hears('.*', ['direct_message', 'direct_mention', 'ambient'], function (bot, message) {
     //console.log('msg - ', message);
     var team_id = message.team;
@@ -451,7 +428,7 @@ controller.hears('.*', ['direct_message', 'direct_mention', 'ambient'], function
 
 
 })
-
+*/
 
 function compose(text, attachments){
     console.log('compose for persona ', persona);
