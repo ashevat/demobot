@@ -26,7 +26,7 @@ function cleanKey(key) {
     // strings and can't contain ".", "#", "$", "/", "[", or "]"
     return key.toLowerCase().replace(/\./g, "").replace(/\?/g,"").replace(/\$/g,"").replace(/\//g,"").replace(/\[/g,"").replace(/\]/g,"").replace(/\#/g,"").trim();
 }
-/*
+
 controller.on('slash_command', function (bot, message) {
     console.log('Here is the actual slash command used: ', message.command);
     var team_id  = message.team_id;
@@ -311,12 +311,6 @@ controller.on('slash_command', function (bot, message) {
 
 
 });
-*/
-
-
-
-
-
 
 controller.on('bot_channel_join', function (bot, message) {
     bot.reply(message, ":wave: team -  I am your demo bot. \n I support direct mentions and DMs, I will read what is in this channel and try to respond accordingly -  you can also `@demobot: help` me.")
@@ -355,6 +349,7 @@ controller.hears('interactive', 'direct_message', function(bot, message) {
 controller.on('interactive_message_callback', function(bot, message) {
 
     // check message.actions and message.callback_id to see what action to take...
+    console.log("got actions" , message.actions)
     bot.replyInteractive(message, "got message id"+message.callback_id+" and actions "+message.actions);
 
 
@@ -397,7 +392,7 @@ controller.hears(['^export yourself$'], ['direct_message', 'direct_mention'], fu
 
 })
 
-/*
+
 controller.hears('.*', ['direct_message', 'direct_mention', 'ambient'], function (bot, message) {
     //console.log('msg - ', message);
     var team_id = message.team;
@@ -427,7 +422,7 @@ controller.hears('.*', ['direct_message', 'direct_mention', 'ambient'], function
 
 
 })
-*/
+
 
 function compose(text, attachments){
     console.log('compose for persona ', persona);
