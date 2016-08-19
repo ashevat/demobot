@@ -350,7 +350,7 @@ controller.on('interactive_message_callback', function(bot, message) {
 
     // check message.actions and message.callback_id to see what action to take...
     console.log("got actions" , message.actions)
-    bot.replyPublic(message, "got message id"+message.callback_id+" and actions "+message.actions);
+    bot.replyInteractive(message, "got message id"+message.callback_id+" and actions "+message.actions);
 
 
 });
