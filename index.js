@@ -355,7 +355,7 @@ controller.on('interactive_message_callback', function(bot, message) {
 
     loadPersonality(team_id, message.channel, function () {
         man_say = cleanKey(message.text);
-        loading  = persona.id+'_voc/_clicked_'+message.callback_id+"_"+[0]["value"];
+        loading  = persona.id+'_voc/_clicked_'+message.callback_id+"_"+message.actions[0]["value"];
         console.log('Loading key: ', "["+loading+"]");
 
         controller.storage.teams.get(loading, function(err, val) {
@@ -376,7 +376,7 @@ controller.on('interactive_message_callback', function(bot, message) {
         });
 
     });
-    
+
     //bot.replyInteractive(message, "got message id"+message.callback_id+" and actions "+message.actions);
 
 
