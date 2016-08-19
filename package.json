@@ -23,7 +23,7 @@
   "homepage": "https://github.com/beepboophq/node-slack-bot#readme",
   "dependencies": {
     "botkit": "0.2.2",
-    "beepboop-botkit": "1.4.0",
+    "beepboop-botkit": "1.4.1",
     "morgan": "1.7.0",
     "botkit-storage-firebase": "1.0.0"
   }
