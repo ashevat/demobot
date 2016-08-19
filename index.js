@@ -378,7 +378,7 @@ controller.hears('interactive', 'direct_message', function(bot, message) {
 controller.on('interactive_message_callback', function(bot, message) {
 
     // check message.actions and message.callback_id to see what action to take...
-    bot.replyPrivate(message, "dont click my buttons!");
+    bot.replyPublic(message, "dont click my buttons!");
     //bot.replyPrivate(message, "got message id"+message.callback_id+" and actions "+message.actions);
 
 
