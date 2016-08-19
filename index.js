@@ -350,7 +350,33 @@ controller.on('interactive_message_callback', function(bot, message) {
 
     // check message.actions and message.callback_id to see what action to take...
     console.log("got actions" , message.actions)
-    bot.replyInteractive(message, "got message id"+message.callback_id+" and actions "+message.actions);
+    var team_id = message.team;
+
+    loadPersonality(team_id, message.channel, function () {
+        man_say = cleanKey(message.text);
+        loading  = persona.id+'_voc/_clicked_'+message.callback_id+"_"+[0]["value"];
+        console.log('Loading key: ', "["+loading+"]");
+
+        controller.storage.teams.get(loading, function(err, val) {
+            console.log("got value" , val)
+            if(val == undefined){
+                console.log('what should I say when you say "'+man_say+'"');
+                if(message.event != "ambient"){
+                    bot.replyInteractive(message, compose('what should I say when you say "'+man_say+'"? not sure... \n Please use /learn to teach me new tricks!', [] ));
+                }
+            }else{
+                resp = val["botsay"].toString();
+                var attach = val["attachments"];
+                if(attach == undefined || attach == null){
+                    attach = []
+                }
+                bot.replyInteractive(message, compose(resp, attach) )
+            }
+        });
+
+    });
+
+    //bot.replyInteractive(message, "got message id"+message.callback_id+" and actions "+message.actions);
 
 
 });
