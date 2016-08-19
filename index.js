@@ -347,9 +347,32 @@ controller.on('bot_channel_join', function (bot, message) {
 
 
 
-//controller.hears(['hello', 'hi'], ['direct_mention'], function (bot, message) {
-//    bot.reply(message, ':wave:')
-//})
+controller.hears('interactive', 'direct_message', function(bot, message) {
+
+    bot.reply(message, {
+        attachments:[
+            {
+                title: 'Do you want to interact with my buttons?',
+                callback_id: '123',
+                attachment_type: 'default',
+                actions: [
+                    {
+                        "name":"yes",
+                        "text": "Yes",
+                        "value": "yes",
+                        "type": "button",
+                    },
+                    {
+                        "name":"no",
+                        "text": "No",
+                        "value": "no",
+                        "type": "button",
+                    }
+                ]
+            }
+        ]
+    });
+});
 
 
 controller.hears(['^hello$'], ['direct_message', 'direct_mention', "ambient"], function (bot, message) {
