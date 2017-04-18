@@ -63,7 +63,9 @@ controller.on('slash_command', function (bot, message) {
                 var  attachments = null;
 
                 bot_say = bot_say+""; //'{ "text": "I am a test message http://slack.com", "attachments": [ { "text": "And here’s an attachment!"} ]}';
-                console.log('string ='+ encodeURI(bot_say) );
+                console.log('string ='+ bot_say );
+                console.log('string encode ='+ encodeURI(bot_say) );
+                console.log('string2 ='+ '{ "text": "I am a test message http://slack.com", "attachments": [ { "text": "And here’s an attachment!"} ]}' );
                 console.log('string2 ='+ encodeURI('{ "text": "I am a test message http://slack.com", "attachments": [ { "text": "And here’s an attachment!"} ]}') );
 
 
