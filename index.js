@@ -62,6 +62,7 @@ controller.on('slash_command', function (bot, message) {
             }else {
                 var  attachments = null;
                 if(bot_say.indexOf('"attachments')>0){
+                    console.log('match value "attachments'+ bot_say.indexOf('"attachments'));
                     try {
                     p_data = JSON.parse(bot_say);
                     } catch(err) {
@@ -74,6 +75,8 @@ controller.on('slash_command', function (bot, message) {
                     }else{
                         bot_say  = "";
                     }
+                }else{
+                    console.log('match NOT value "attachments'+ bot_say.indexOf('"attachments'));
                 }
                 saving  = persona.id+'_voc/_'+man_say;
                 console.log('Saving key, value: ', "["+saving+"],["+bot_say+"}", attachments );
