@@ -67,10 +67,11 @@ controller.on('slash_command', function (bot, message) {
                 console.log('string encode ='+ encodeURI(bot_say) );
                 console.log('string2 ='+ '{ "text": "I am a test message http://slack.com", "attachments": [ { "text": "And here’s an attachment!"} ]}' );
                 console.log('string2 ='+ encodeURI('{ "text": "I am a test message http://slack.com", "attachments": [ { "text": "And here’s an attachment!"} ]}') );
-                var fixedstr =  decodeURIComponent(escape(bot_say))
-                console.log('string3 ='+ fixedstr );
-                console.log('string3 encode ='+ encodeURI(fixedstr) );
-
+                bot_say = bot_say
+                    .replace(/[\u2018\u2019]/g, "'")
+                    .replace(/[\u201C\u201D]/g, '"')
+                console.log('string ='+ bot_say );
+                console.log('string encode ='+ encodeURI(bot_say) );
 
                 if(bot_say.indexOf('attachments')>0){
                     //console.log('match value "attachments'+ bot_say.indexOf('"attachments'));
