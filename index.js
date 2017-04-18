@@ -61,7 +61,7 @@ controller.on('slash_command', function (bot, message) {
 
             }else {
                 var  attachments = null;
-
+                console.log('string ='+ bot_say);
                 bot_say = bot_say.toString(); //'{ "text": "I am a test message http://slack.com", "attachments": [ { "text": "And here’s an attachment!"} ]}';
 
                 if(bot_say.indexOf('attachments')>0){
