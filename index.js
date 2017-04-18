@@ -64,6 +64,7 @@ controller.on('slash_command', function (bot, message) {
 
                 bot_say = bot_say+""; //'{ "text": "I am a test message http://slack.com", "attachments": [ { "text": "And here’s an attachment!"} ]}';
                 console.log('string ='+ bot_say);
+                
 
                 if(bot_say.indexOf('attachments')>0){
                     //console.log('match value "attachments'+ bot_say.indexOf('"attachments'));
