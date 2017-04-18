@@ -76,7 +76,7 @@ controller.on('slash_command', function (bot, message) {
                         bot_say  = "";
                     }
                 }else{
-                    console.log('{'+bot_say+'} did NOT match value "attachments -'+ bot_say.indexOf('"attachments'));
+                    console.log('{'+bot_say+'} did NOT match value "attachments -'+ bot_say.indexOf('"attachments')+ 'but '+bot_say.includes('attachments"'));
                 }
                 saving  = persona.id+'_voc/_'+man_say;
                 console.log('Saving key, value: ', "["+saving+"],["+bot_say+"}", attachments );
