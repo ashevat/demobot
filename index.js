@@ -63,7 +63,7 @@ controller.on('slash_command', function (bot, message) {
                 var  attachments = null;
                 if(bot_say.indexOf('attachments')>0){
                     //console.log('match value "attachments'+ bot_say.indexOf('"attachments'));
-                    try {
+                    //try {
                     p_data = JSON.parse(bot_say);
                     //} catch(err) {
                     //    bot.replyPrivate(message, 'Could not digest your JSON. Please test at https://api.slack.com/docs/messages/builder');
