@@ -62,34 +62,34 @@ controller.on('slash_command', function (bot, message) {
             }else {
                 var  attachments = null;
 
-                bot_say = bot_say+""; //'{ "text": "I am a test message http://slack.com", "attachments": [ { "text": "And here’s an attachment!"} ]}';
-                console.log('string ='+ bot_say );
-                console.log('string encode ='+ encodeURI(bot_say) );
-                console.log('string2 ='+ '{ "text": "I am a test message http://slack.com", "attachments": [ { "text": "And here’s an attachment!"} ]}' );
-                console.log('string2 ='+ encodeURI('{ "text": "I am a test message http://slack.com", "attachments": [ { "text": "And here’s an attachment!"} ]}') );
+               // bot_say = bot_say+""; //'{ "text": "I am a test message http://slack.com", "attachments": [ { "text": "And here’s an attachment!"} ]}';
+               // console.log('string ='+ bot_say );
+                //console.log('string encode ='+ encodeURI(bot_say) );
+                //console.log('string2 ='+ '{ "text": "I am a test message http://slack.com", "attachments": [ { "text": "And here’s an attachment!"} ]}' );
+                //console.log('string2 ='+ encodeURI('{ "text": "I am a test message http://slack.com", "attachments": [ { "text": "And here’s an attachment!"} ]}') );
                 bot_say = bot_say
                     .replace(/[\u2018\u2019]/g, "'")
                     .replace(/[\u201C\u201D]/g, '"')
-                console.log('string ='+ bot_say );
-                console.log('string encode ='+ encodeURI(bot_say) );
+               // console.log('string ='+ bot_say );
+               // console.log('string encode ='+ encodeURI(bot_say) );
 
                 if(bot_say.indexOf('attachments')>0){
                     //console.log('match value "attachments'+ bot_say.indexOf('"attachments'));
-                    //try {
+                    try {
                     p_data = JSON.parse(bot_say);
-                    //} catch(err) {
-                    //    bot.replyPrivate(message, 'Could not digest your JSON. Please test at https://api.slack.com/docs/messages/builder');
-                    //    return;
-                    //}
+                    } catch(err) {
+                        bot.replyPrivate(message, 'Could not digest your JSON. Please test at https://api.slack.com/docs/messages/builder');
+                        return;
+                    }
                     attachments = p_data["attachments"];
                     if(p_data["text"]!=null && p_data["text"]!=''){
                         bot_say =  p_data["text"];
                     }else{
                         bot_say  = "";
                     }
-                }else{
-                    console.log('{'+bot_say+'} did NOT match value "attachments -'+ bot_say.indexOf('attachments')+ 'but '+bot_say.includes('dd'));
-                }
+                }//else{
+                //    console.log('{'+bot_say+'} did NOT match value "attachments -'+ bot_say.indexOf('attachments')+ 'but '+bot_say.includes('dd'));
+                //}
                 saving  = persona.id+'_voc/_'+man_say;
                 console.log('Saving key, value: ', "["+saving+"],["+bot_say+"}", attachments );
                 if(attachments != null){
